@@ -1,0 +1,2990 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSKILL App Demo</title>
+    <!-- Tải font Inter từ Google Fonts để đảm bảo hỗ trợ tiếng Việt đầy đủ -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Màu sắc thương hiệu mới (Xanh Navy/Công nghệ cao)
+                        'upskill-primary': '#2F5DDE',      // Mid Blue
+                        'upskill-secondary': '#A855F7',   // Violet (Purple accent)
+                        'upskill-accent': '#FFD700',      // Gold/Amber
+                        
+                        // --- FUTURISTIC NAVY COLORS (NEW BRAND PALETTE) ---
+                        'upskill-navy-dark': '#0B1E3C',   // Primary Dark Navy
+                        'upskill-navy-mid': '#153E75',    // Mid Navy Blue
+                        'upskill-blue-light': '#5BA8FF',  // Light Blue/Aqua
+                        'upskill-text-accent': '#FACC15', // Vàng sáng cho tiêu đề
+                        
+                        'upskill-gradient-start': '#6366f1', // Indigo 500
+                        'upskill-gradient-end': '#d946ef',   // Fuchsia 500
+                        'success-color': '#10b981',       // Emerald Green
+                        'warning-color': '#f97316',       // Orange
+                        'app-bg-start': '#f9fafb',        // Light Gray
+                        'app-bg-end': '#ffffff',          // White   
+                        'mentor-card-start': '#6366f1',
+                        'mentor-card-end': '#a855f7',
+                        'mentor-data-1': '#34d399', 
+                        'mentor-data-2': '#f472b6', 
+
+                        // Màu cho Calendar (CẬP NHẬT THEO YÊU CẦU MỚI: AVAILABLE, PENDING, BOOKED, BUSY)
+                        // Slot Available
+                        'calendar-available-bg': '#DCE7FF', // Xanh lam nhạt
+                        'calendar-available-border': '#BFD0FF', 
+                        'calendar-available-text': '#1E2A50', 
+                        
+                        // Slot Pending
+                        'calendar-pending-bg': '#FEF3C7', // Vàng nhạt
+                        'calendar-pending-border': '#F59E0B', // Vàng đậm
+                        'calendar-pending-text': '#92400E', 
+                        
+                        // Slot Booked (Confirmed)
+                        'calendar-booked-bg': '#DBEAFE', // Xanh lam nhạt
+                        'calendar-booked-border': '#3B82F6', // Xanh lam đậm
+                        'calendar-booked-text': '#1E3A8A', 
+                        
+                        // Slot Busy
+                        'calendar-busy-bg': '#F3F4F6', // Xám nhạt
+                        'calendar-busy-border': '#9CA3AF', 
+                        'calendar-busy-text': '#4B5563',
+
+                        'calendar-bg-dark': '#243B64',    // Nền Navy đậm cho Lịch
+                        'payment-bg-start': '#1C2C4E', // Navy nhạt cho Payment Mentee
+                        'payment-bg-end': '#3B82F6', // Lam sáng
+
+                        // Slot Selected (New)
+                        'calendar-selected-bg': '#4A5FD0',
+                        'calendar-selected-border': '#3d4cc0',
+                        'calendar-selected-text': '#4A5FD0',
+                        
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", 'Roboto', "Helvetica Neue", 'Arial', "Noto Sans", 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
+                    },
+                    keyframes: {
+                        'pulse-custom': {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(1.05)', opacity: '0.8' },
+                        },
+                         'float-slow': {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-10px) rotate(1deg)' }
+                        },
+                        'shine': {
+                            // Shimmer animation for buttons/text
+                            '0%': { 'background-position': '200% center' },
+                            '100%': { 'background-position': '-200% center' }
+                        },
+                        'breathe': {
+                            '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(79, 70, 229, 0.7)' },
+                            '50%': { 'box-shadow': '0 0 0 10px rgba(79, 70, 229, 0)' }
+                        },
+                        'glowing-node': {
+                            '0%, 100%': { 'box-shadow': '0 0 8px #a855f7' },
+                            '50%': { 'box-shadow': '0 0 15px #6366f1' }
+                        },
+                        // Slide-up animation MƯỢT HƠN
+                        'slide-up': {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        'glow-loop': {
+                            '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(59, 130, 246, 0.5)', opacity: '1' },
+                            '50%': { 'box-shadow': '0 0 15px 5px rgba(34, 211, 238, 0.8)', opacity: '0.95' }
+                        },
+                        'tilt-in': {
+                            '0%': { transform: 'rotateX(-10deg) translateY(20px) scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'rotateX(0deg) translateY(0) scale(1)', opacity: '1' }
+                        },
+                        'particle-float': {
+                             '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+                             '50%': { transform: 'translate(10px, -10px) scale(1.1)' }
+                        },
+                        'neon-glow': {
+                            '0%, 100%': { 'text-shadow': '0 0 5px #fff, 0 0 10px #A855F7' },
+                            '50%': { 'text-shadow': '0 0 10px #fff, 0 0 20px #5BA8FF, 0 0 30px #A855F7' }
+                        },
+                        'checkmark-burst': {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '50%': { transform: 'scale(1.2)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                         'neon-border-glow': {
+                            '0%, 100%': { 'box-shadow': '0 0 5px #22D3EE' },
+                            '50%': { 'box-shadow': '0 0 10px #22D3EE, 0 0 15px #8B5CF6' }
+                        },
+                        'data-beam': {
+                            '0%': { width: '0%', opacity: '0' },
+                            '50%': { width: '100%', opacity: '1' },
+                            '100%': { width: '0%', opacity: '0', left: '100%' }, // Sửa animation data-beam
+                        },
+                        'data-beam-reverse': {
+                            '0%': { width: '0%', opacity: '0', right: '100%' },
+                            '50%': { width: '100%', opacity: '1', right: '0%' },
+                            '100%': { width: '0%', opacity: '0', right: '100%' },
+                        }
+                    },
+                    animation: {
+                        'pulse-custom': 'pulse-custom 2s infinite ease-in-out',
+                        'float-slow': 'float-slow 6s infinite alternate',
+                        'shine': 'shine 3s infinite',
+                        'breathe': 'breathe 2s infinite cubic-bezier(0.4, 0, 0.6, 1)',
+                        'glowing-node': 'glowing-node 3s infinite alternate',
+                        'slide-up': 'slide-up 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards', // Cập nhật easing
+                        'glow-loop': 'glow-loop 4s infinite alternate',
+                        'tilt-in': 'tilt-in 0.6s ease-out forwards',
+                        'particle-float': 'particle-float 10s infinite alternate',
+                        'sparkle': 'pulse-custom 1.5s infinite alternate', // New sparkle for header
+                        'neon-glow': 'neon-glow 2s forwards',
+                        'checkmark-burst': 'checkmark-burst 0.7s ease-out',
+                        'neon-border-glow': 'neon-border-glow 2s infinite alternate', // New animation for calendar slots
+                        'data-beam': 'data-beam 2s linear infinite',
+                        'data-beam-reverse': 'data-beam-reverse 2s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            /* 3) Toàn bộ nền ứng dụng – đổi gradient */
+            background-color: #fff9da; /* Giữ nguyên body, áp dụng cho #screen-content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Simulate iPhone Shell */
+        #iphone-frame {
+            width: 400px; 
+            height: 850px; 
+            background-color: #000;
+            border-radius: 60px;
+            padding: 10px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+            position: relative; 
+        }
+
+        #screen-content {
+            width: 100%;
+            height: calc(100% - 4px); 
+            /* 3) Áp dụng nền gradient đồng nhất cho nội dung app */
+            background: linear-gradient(135deg, #a7b4e6, #d7e1fe, #C9D6FF);
+            border-radius: 50px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Simulate Dynamic Island */
+        #dynamic-island {
+            width: 100px;
+            height: 30px;
+            background-color: black;
+            border-radius: 15px;
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        /* Ẩn thanh cuộn - QUAN TRỌNG CHO CẢM GIÁC NATIVE */
+        #screen-content::-webkit-scrollbar { display: none; width: 0; background: transparent; }
+        #screen-content { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* ĐỊNH NGHĨA LỚP ẨN THANH CUỘN CHUNG (CHO CẢ HORIZONTAL SCROLL) */
+        .hide-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        /* Styles for Chat Screen */
+        .chat-bubble-mentor { background-color: #e5e7eb; border-radius: 1rem 1rem 1rem 0.5rem; }
+        .chat-bubble-user { background: linear-gradient(90deg, #6366F1, #a855f7); color: white; border-radius: 1rem 1rem 0.5rem 1rem; }
+
+        /* Đảm bảo nav-bar cố định ở đáy màn hình nội dung */
+        #nav-bar {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 64px; 
+            padding-bottom: 8px; 
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 20;
+        }
+        
+        /* Custom style cho nút BẮT ĐẦU có hiệu ứng Shine */
+        .shine-button { 
+            position: relative; 
+            overflow: hidden;
+            /* Cập nhật gradient rực rỡ hơn */
+            background: linear-gradient(90deg, #A855F7, #5BA8FF, #22D3EE); 
+            background-size: 200% auto; /* Đảm bảo background đủ lớn cho animation shine */
+        }
+        .shine-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5) 40%, transparent 60%); 
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+        .shine-button:hover {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+        }
+
+        /* Hiệu ứng tương tác MƯỢT MÀ VỚI CUBIC-BEZIER */
+        .interactive-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px) scale(1.01); 
+            box-shadow: 0 18px 36px -12px rgba(0, 0, 0, 0.3); 
+        }
+
+        /* Vị trí cố định cho nút Chatbot AI */
+        #floating-chat-button {
+            position: absolute;
+            bottom: 75px;
+            right: 15px;
+            z-index: 50;
+        }
+
+        /* Styling cho Input có viền gradient */
+        .gradient-input {
+            border: 2px solid transparent;
+            background-color: #f9fafb; /* Light background for contrast */
+            box-shadow: 0 0 0 1px #e5e7eb;
+            transition: all 0.3s;
+        }
+        .gradient-input:focus {
+            background-color: #ffffff;
+            box-shadow: 0 0 0 2px #A855F7, 0 0 10px rgba(168, 85, 247, 0.3);
+            outline: none;
+        }
+
+        /* CSS cho hiệu ứng Typewriter */
+        .typewriter-container {
+            position: relative;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; 
+            white-space: nowrap;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* Hiệu ứng hạt sáng cho Welcome screen */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: #5BA8FF; /* Light Blue/Aqua */
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: particle-float 15s infinite alternate;
+            box-shadow: 0 0 5px #5BA8FF;
+        }
+        
+        /* Custom Class for Header shine text */
+        .shine-text {
+            background: linear-gradient(90deg, #FACC15, #FFFFFF, #FACC15);
+            background-size: 200% auto;
+            color: #FACC15;
+            /* 4) Đã xóa animation: shine 2s infinite linear; ở đây */
+        }
+        
+        /* Custom Header Styling - Ensure it has space/shadow */
+        .styled-header {
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); 
+             padding: 16px;
+             margin-top: 47px;
+        }
+
+        /* Custom Style for Calendar */
+        .calendar-grid {
+             display: grid;
+             /* 1) Sửa cột cho lịch Mentee/Mentor: time column + 7 days */
+             grid-template-columns: 35px repeat(7, 1fr); 
+             gap: 1px;
+             background-color: #E5E7EB; /* Grid divider */
+             border: 1px solid #E5E7EB;
+        }
+        .calendar-header {
+             background-color: #F3F4F6;
+             font-weight: 600;
+             font-size: 0.75rem;
+             padding: 8px 4px;
+             text-align: center;
+             border-right: 1px solid #E5E7EB;
+        }
+        .time-label {
+             font-size: 0.6rem;
+             height: 30px; /* Sửa thành 30px cho slot 30 phút */
+             display: flex;
+             align-items: flex-start;
+             justify-content: flex-end;
+             padding-right: 4px;
+             color: #6B7280;
+             background-color: white;
+             border-bottom: 1px solid #E5E7EB;
+        }
+        .calendar-slot {
+             height: 30px; /* Sửa thành 30px cho slot 30 phút */
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             transition: all 0.2s;
+             position: relative;
+             overflow: hidden;
+             cursor: pointer;
+             border-bottom: 1px solid #E5E7EB;
+             background-color: white; /* Default background */
+        }
+        
+        /* Specific Slot Styles (CẬP NHẬT THEO YÊU CẦU MỚI - Available, Pending, Booked, Busy, Selected) */
+        .slot-empty {
+            background-color: #FFFFFF; /* White/Empty */
+            cursor: default;
+        }
+        /* Style cho Slot Button bên trong Cell */
+        .slot-button {
+             /* Base style cho button slot bên trong cell (đảm bảo nó lấp đầy cell) */
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+             padding: 4px 6px;
+             border-radius: 8px; /* Bo tròn slot */
+             width: calc(100% - 2px); /* Kích thước nhỏ hơn 1px để không chạm biên */
+             height: 28px;
+             margin: 0 auto;
+             font-size: 0.7rem; /* Cỡ chữ nhỏ hơn */
+             font-weight: 600;
+             transition: all 0.2s;
+             cursor: pointer;
+        }
+
+        /* Slot Available (Mentee) */
+        .slot-available .slot-button {
+            background-color: var(--calendar-available-bg); /* #DCE7FF */
+            border: 1px solid var(--calendar-available-border); /* #BFD0FF */
+            color: var(--calendar-available-text); /* #1E2A50 */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .slot-available:hover .slot-button {
+             background-color: #A7B4E6; /* Hover đậm hơn */
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Slot Selected (Mentee) */
+        .slot-selected .slot-button {
+            background-color: var(--calendar-selected-bg); /* #4A5FD0 */
+            border: 1px solid var(--calendar-selected-border); /* #3d4cc0 */
+            color: var(--calendar-selected-text); /* #FFFFFF */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            z-index: 1;
+        }
+        .slot-selected:hover .slot-button {
+             background-color: #3d4cc0;
+        }
+
+
+        /* Slot Pending */
+        .slot-pending {
+            background-color: var(--calendar-pending-bg); /* #FEF3C7 */
+            border-left: 3px solid var(--calendar-pending-border); /* #F59E0B */
+            color: var(--calendar-pending-text); /* #92400E */
+            cursor: default;
+        }
+        .slot-confirmed {
+            background-color: var(--calendar-booked-bg); /* #DBEAFE */
+            border-left: 3px solid var(--calendar-booked-border); /* #3B82F6 */
+            color: var(--calendar-booked-text); /* #1E3A8A */
+            cursor: default;
+        }
+        .slot-occupied {
+            background-color: var(--calendar-busy-bg); /* #F3F4F6 */
+            border-left: 3px solid var(--calendar-busy-border); /* #9CA3AF */
+            color: var(--calendar-busy-text); /* #4B5563 */
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* 5) Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7); /* Nền trắng trong suốt */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border-radius: 20px;
+        }
+
+        /* 5) Glow Effect for Avatar */
+        .avatar-glow {
+            box-shadow: 0 0 15px 5px rgba(91, 168, 255, 0.5); /* Lam nhạt */
+            animation: glow-loop 4s infinite alternate; 
+        }
+        
+    </style>
+</head>
+<body class="font-sans">
+
+<div id="iphone-frame">
+    <!-- Dynamic Island Simulation -->
+    <div id="dynamic-island"></div>
+
+    <!-- Main Content Screen -->
+    <div id="screen-content" class="overflow-hidden">
+        <!-- System Status Bar -->
+        <div id="status-bar" class="absolute top-0 left-0 right-0 h-10 px-10 pt-2 flex justify-between items-center text-xs font-semibold text-white bg-transparent z-10 rounded-t-[50px]">
+            <span class="text-sm">9:41</span>
+            <div class="flex items-center space-x-1">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 2.5h10a.5.5 0 01.5.5v13a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5zM6 4v11h8V4H6z"/></svg>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 17a.5.5 0 01-.5-.5v-1a.5.5 0 011 0v1a.5.5 0 01-.5.5zM7 17a.5.5 0 01-.5-.5v-1a.5.5 0 011 0v1a.5.5 0 01-.5.5zM13 17a.5.5 0 01-.5-.5v-1a.5.5 0 011 0v1a.5.5 0 01-.5.5z"/></svg>
+            </div>
+        </div>
+        
+        <!-- Screen Content Will Be Injected Here -->
+        <div id="app-container" class="h-full"></div>
+
+    </div>
+
+    <!-- Fixed Bottom Tab Bar (Chỉ dùng cho Mentee) -->
+    <div id="nav-bar" class="bg-white border-t border-gray-100 flex justify-around items-center z-10 rounded-b-[50px] px-2 shadow-2xl">
+        <!-- Floating Chatbot Button -->
+        <button id="floating-chat-button" onclick="navigate('chat', {mode: 'ai', back: 'dashboard'})" class="hidden w-14 h-14 bg-upskill-secondary text-white rounded-full shadow-xl flex items-center justify-center interactive-card animate-breathe z-30">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2 14h-4v-1h4v1zm-2-2h-2v-1h2v1zm2-3h-4v-1h4v1zm-2-3h-2v-1h2v1z"/></svg>
+        </button>
+
+        <button onclick="navigate('dashboard')" class="nav-item text-gray-800 flex flex-col items-center p-2 rounded-full transition duration-150">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h6V3H3v10zm0 8h6v-6H3v6zm12 0h6v-6h-6v10zm0-18v6h6V3h-6z"/></svg>
+            <span class="text-[11px] mt-1 font-semibold">Trang chủ</span>
+        </button>
+        <button onclick="navigate('mentor_list')" class="nav-item text-gray-500 hover:text-gray-800 flex flex-col items-center p-2 rounded-full transition duration-150">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="text-[11px] mt-1">Mentor</span>
+        </button>
+        <!-- THÊM MỤC ĐẶT LỊCH MỚI -->
+        <button onclick="navigate('booking_list')" class="nav-item text-gray-500 hover:text-gray-800 flex flex-col items-center p-2 rounded-full transition duration-150">
+             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-3V5h-2v7H7l5 5 5-5zM5 19h14v2H5v-2z"/></svg>
+            <span class="text-[11px] mt-1">Đặt lịch</span>
+        </button>
+        <!-- CHUYỂN MỤC XẾP HẠNG THÀNH VIỆC LÀM -->
+        <button onclick="navigate('marketplace')" class="nav-item text-gray-500 hover:text-gray-800 flex flex-col items-center p-2 rounded-full transition duration-150">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+            <span class="text-[11px] mt-1">Việc làm</span>
+        </button>
+        <button onclick="navigate('profile')" class="nav-item text-gray-500 hover:text-gray-800 flex flex-col items-center p-2 rounded-full transition duration-150">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="text-[11px] mt-1">Hồ sơ</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    const appContainer = document.getElementById('app-container');
+    const statusBar = document.getElementById('status-bar');
+    const floatingChatButton = document.getElementById('floating-chat-button');
+    const today = new Date(); // Dữ liệu ngày hiện tại
+
+    let userId = null; 
+    let userRole = 'mentee'; 
+    let registrationRole = 'mentee'; 
+    let currentScreen = 'welcome';
+    let isMentorVerified = false;
+    let activeMentorTab = 'tong_quan';
+    let activeRankingTab = 'nhiem_vu'; 
+    let currentMentorBooking = null; // Lưu mentor đang được chọn để đặt lịch
+
+    // State cho Mentee Calendar (Mục 2)
+    let selectedSlots = []; // { mentorName, date: 'yyyy-mm-dd', time: 'HH:MM - HH:MM', price: number }
+    const MAX_SELECT = 3; 
+    let currentWeekStart = today; 
+
+    // Dữ liệu giả lập
+    const MENTORS = [
+        { name: 'Trần Tuấn Anh', role: 'Backend, AI, Blockchain', price: 250000, quality: 92, verified: true, avatar: 'A', color: 'bg-green-500', isAvailable: true },
+        { name: 'Lê Thị Bình', role: 'UX/UI Design, Product Mgt', price: 180000, quality: 85, verified: false, avatar: 'B', color: 'bg-indigo-500', isAvailable: true },
+        { name: 'Phạm Văn Cường', role: 'Marketing Digital, Data', price: 200000, quality: 95, verified: true, avatar: 'C', color: 'bg-yellow-500', isAvailable: true },
+        { name: 'Nguyễn Thị Dinh', role: 'Tài chính Ngân hàng, Fintech', price: 300000, quality: 88, verified: false, avatar: 'D', color: 'bg-purple-500', isAvailable: false },
+        { name: 'Hoàng Minh Anh', role: 'DevOps, Cloud Computing', price: 220000, quality: 79, verified: true, avatar: 'E', color: 'bg-blue-500', isAvailable: true },
+        { name: 'Vũ Thu Phương', role: 'Kỹ năng mềm, Lãnh đạo', price: 250000, quality: 98, verified: true, avatar: 'F', color: 'bg-pink-500', isAvailable: true },
+    ];
+    
+    const MENTEES = [
+        { id: 1, name: 'Nguyễn Hải Nam', score: 1250, rank: 1, isYou: false, progress: 85, skill: 'Python/AI', mentors: 3 },
+        { id: 2, name: 'Phạm Thị Xuân', score: 1100, rank: 2, isYou: false, progress: 70, skill: 'UX/UI Design', mentors: 1 },
+        { id: 5, name: 'Nguyễn Văn Anh', score: 750, rank: 3, isYou: true, progress: 60, skill: 'Blockchain', mentors: 5 }, 
+        { id: 3, name: 'Lê Văn Lộc', score: 680, rank: 4, isYou: false, progress: 50, skill: 'Fintech', mentors: 2 },
+        { id: 4, name: 'Đỗ Thị Quyên', score: 520, rank: 5, isYou: false, progress: 30, skill: 'Marketing', mentors: 0 },
+    ].sort((a, b) => a.rank - b.rank); 
+    
+    const MISSION_GROUPS = {
+        'Hàng ngày': [
+            { id: 1, title: 'Hoàn thành Quiz Module Python', reward: '50 điểm ✨', status: 'Đã xong', color: 'success-color' },
+            { id: 2, title: 'Truy cập Mentor Dashboard', reward: '20 điểm ✨', status: 'Chưa xong', color: 'warning-color' },
+            { id: 3, title: 'Đánh giá 1 Mentor', reward: '30 điểm ✨', status: 'Chưa xong', color: 'warning-color' },
+        ],
+        'Hợp tác': [
+            { id: 4, title: '1 phiên Mentor (Tuần)', reward: '150 điểm ✨ + 1 Voucher', status: 'Chưa xong', color: 'upskill-primary' },
+            { id: 5, title: 'Cùng Mentee hoàn thành Dự án Mini', reward: '300 điểm ✨', status: 'Chưa xong', color: 'upskill-secondary' },
+        ],
+        'Thử thách Lớn': [
+            { id: 6, title: 'Hoàn thành 1 Lộ trình Kỹ năng', reward: '500 điểm ✨ + Huy hiệu Vàng', status: 'Chưa xong', color: 'upskill-accent' },
+            { id: 7, title: 'Đạt Level 5', reward: '1000 điểm ✨', status: 'Chưa xong', color: 'upskill-accent' },
+        ]
+    };
+    
+    // Mock Mentee Slots Data for Mentee Calendar (Mục 2)
+    const menteeSlotsMock = {
+      // Key là yyyy-mm-dd
+      "2025-10-20": [ // Thứ 2
+        { time: "09:00 - 09:30", price: 250000, status: 'available' },
+        { time: "09:30 - 10:00", price: 250000, status: 'available' },
+        { time: "10:00 - 10:30", price: 250000, status: 'busy' }, // Busy Slot
+        { time: "14:00 - 14:30", price: 250000, status: 'available' },
+        { time: "14:30 - 15:00", price: 250000, status: 'available' },
+      ],
+      "2025-10-21": [ // Thứ 3
+        { time: "09:00 - 09:30", price: 250000, status: 'available' },
+        { time: "11:00 - 11:30", price: 250000, status: 'available' },
+        { time: "16:00 - 16:30", price: 250000, status: 'available' },
+      ],
+      "2025-10-22": [ // Thứ 4
+        { time: "10:00 - 10:30", price: 250000, status: 'available' },
+        { time: "10:30 - 11:00", price: 250000, status: 'available' },
+        { time: "14:00 - 14:30", price: 250000, status: 'pending' }, // Pending Slot
+      ],
+      "2025-10-23": [ // Thứ 5
+        { time: "10:00 - 10:30", price: 250000, status: 'booked' }, // Booked Slot
+        { time: "10:30 - 11:00", price: 250000, status: 'booked' },
+        { time: "15:00 - 15:30", price: 250000, status: 'available' },
+      ],
+      "2025-10-24": [ // Thứ 6
+        { time: "10:00 - 10:30", price: 250000, status: 'available' },
+        { time: "10:30 - 11:00", price: 250000, status: 'available' },
+      ],
+      "2025-10-25": [ // Thứ 7
+        { time: "10:00 - 10:30", price: 250000, status: 'available' },
+      ],
+      // Chủ nhật không có slot
+    };
+    
+    // Dữ liệu lịch của Mentor (cho Mentor xem & quản lý)
+    let mentorSlots = [
+        // Sửa nhãn ngày cho đồng bộ (Mục 1)
+        { id: 1, day: 'T4', date: '22/10', time: '14:00 - 15:00', status: 'confirmed', mentee: 'Nguyễn Văn Anh', subject: 'Lập trình Solidity', amount: 250000, hash: '0x1c2b...' }, 
+        { id: 2, day: 'T5', date: '23/10', time: '15:30 - 16:30', status: 'pending', mentee: 'Phạm Thị Xuân', subject: 'Phân tích đối thủ', amount: 200000, hash: null },   
+        { id: 3, day: 'T6', date: '24/10', time: '10:00 - 11:00', status: 'available', mentee: null, subject: null, amount: null, hash: null },                       
+        { id: 4, day: 'T6', date: '24/10', time: '16:00 - 17:00', status: 'occupied', mentee: 'Họp công ty', subject: null, amount: null, hash: null },
+    ];
+
+
+    // Helper function to format VND
+    function formatVND(amount) {
+        if (typeof amount !== 'number' || isNaN(amount)) return '0 VNĐ';
+        return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    }
+    
+    
+    // Helper: Chuyển đổi ngày/tháng/năm (Mục 1)
+    const getFormattedDate = (dateString) => {
+        // 0=CN, 1=T2, ..., 6=T7
+        const dayNamesFull = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+        const dayNamesShort = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+        
+        const date = new Date(dateString);
+        const dayIndex = date.getDay();
+        
+        const dayNameShort = dayNamesShort[dayIndex];
+        const dayOfMonth = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        
+        return {
+            full: `${dayNamesFull[dayIndex]}, ${dayOfMonth}/${month}`, // Thứ 2, 20/10
+            short: dayNameShort, // T2
+            date: `${dayOfMonth}/${month}`, // 20/10
+            iso: dateString,
+            dayIndex: dayIndex
+        };
+    };
+
+    // Hàm helper: Lấy các ngày trong tuần (bắt đầu từ T2)
+    function getCurrentWeekDays(start = today) {
+        const startOfWeek = new Date(start);
+        startOfWeek.setHours(0, 0, 0, 0);
+
+        // Đảm bảo tuần bắt đầu từ T2 (ISO day 1)
+        const day = startOfWeek.getDay(); // 0=CN, 1=T2
+        const diff = day === 0 ? 6 : day - 1; 
+        startOfWeek.setDate(startOfWeek.getDate() - diff);
+        
+        const days = [];
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(startOfWeek);
+            date.setDate(startOfWeek.getDate() + i);
+            const isoString = date.toISOString().split('T')[0];
+            const formatted = getFormattedDate(isoString);
+            days.push({
+                ...formatted,
+                date: `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`,
+                isToday: date.toDateString() === today.toDateString(),
+                iso: isoString,
+            });
+        }
+        return days;
+    }
+
+
+    // Logic Toggle cho Mentee Selection (Mục 2)
+    window.toggleSlotSelection = (date, time, price, mentorName) => {
+        const slotData = { mentorName, date, time, price };
+        const index = selectedSlots.findIndex(s => s.date === date && s.time === time);
+        
+        if (index > -1) {
+            // Deselect
+            selectedSlots.splice(index, 1);
+        } else {
+            // Select
+            if (selectedSlots.length >= MAX_SELECT) {
+                const messageEl = document.createElement('div');
+                messageEl.textContent = `Chỉ được chọn tối đa ${MAX_SELECT} slot (1.5 giờ)!`;
+                messageEl.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-3 rounded-lg shadow-xl z-50 animate-slide-up';
+                document.body.appendChild(messageEl);
+                setTimeout(() => messageEl.remove(), 2000);
+                return;
+            }
+            selectedSlots.push(slotData);
+        }
+
+        // Rerender the calendar to update UI state
+        navigate('booking_mentee_calendar', { name: mentorName });
+    }
+    
+    
+    // Cập nhật trạng thái Nav Bar dưới cùng (Chỉ cho Mentee)
+    function NavBar(activeScreen) {
+        const navBar = document.getElementById('nav-bar');
+        if (navBar) {
+            navBar.style.display = 'flex';
+        }
+
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            btn.classList.remove('text-upskill-primary');
+            btn.classList.add('text-gray-500');
+            const span = btn.querySelector('span');
+            if (span) {
+                span.classList.remove('text-upskill-primary', 'font-bold');
+                span.classList.add('text-gray-500', 'font-medium');
+            }
+        });
+
+        // Mapping screen names to button onclick targets
+        const screenMap = {
+            'mentee_dashboard': 'dashboard',
+            'ranking': 'dashboard', 
+            'mentor_list': 'mentor_list',
+            'mentor_detail': 'mentor_list',
+            'booking_mentor_list': 'booking_list',
+            'booking_mentee_calendar': 'booking_list',
+            'payment_gateway': 'booking_list',
+            'payment_success': 'booking_list',
+            'marketplace': 'marketplace',
+            'mentee_profile': 'profile',
+        };
+
+        let targetScreen = screenMap[activeScreen] || activeScreen; 
+        if (targetScreen === 'dashboard' || targetScreen === 'mentee_dashboard' || targetScreen === 'ranking') {
+             targetScreen = 'dashboard';
+        }
+        if (targetScreen === 'booking_list' || targetScreen === 'booking_mentor_list' || targetScreen === 'booking_mentee_calendar' || targetScreen === 'payment_gateway' || targetScreen === 'payment_success') {
+             targetScreen = 'booking_list';
+        }
+        if (targetScreen === 'profile' || targetScreen === 'mentee_profile') {
+             targetScreen = 'profile';
+        }
+        
+        const activeNavBtn = document.querySelector(`[onclick="navigate('${targetScreen}')"]`);
+        
+        if (activeNavBtn) {
+            activeNavBtn.classList.add('text-upskill-primary');
+            activeNavBtn.classList.remove('text-gray-500');
+            const span = activeNavBtn.querySelector('span');
+            if (span) {
+                span.classList.add('text-upskill-primary', 'font-bold');
+                span.classList.remove('text-gray-500', 'font-medium');
+            }
+        }
+    }
+    
+    // Nav Bar cho Mentor Dashboard
+    function MentorNavBar(activeTab) {
+        // Cập nhật 'lich_co_van' thành Calendar View
+        const tabs = ['tong_quan', 'mentee_list', 'lich_co_van', 'tai_nguyen', 'bao_cao', 'ho_so'];
+        let html = `<div class="sticky top-10 bg-white/90 backdrop-blur-sm border-b border-gray-100 py-3 overflow-x-auto whitespace-nowrap z-10 px-4 hide-scrollbar" style="-webkit-overflow-scrolling: touch; touch-action: pan-x; transition: all 0.3s;">
+            ${tabs.map(tab => `
+                <button onclick="navigate('mentor_dashboard', {tab: '${tab}'})"
+                    class="nav-mentor-tab ${activeTab === tab ? 'bg-upskill-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'} 
+                    font-medium text-sm px-4 py-2 rounded-full transition duration-150 mr-2 inline-block">
+                    ${tab === 'tong_quan' ? 'Tổng quan' : 
+                      tab === 'mentee_list' ? 'Mentee' : 
+                      tab === 'lich_co_van' ? 'Lịch cá nhân' : 
+                      tab === 'tai_nguyen' ? 'Tài nguyên' : 
+                      tab === 'bao_cao' ? 'Giao dịch' : 
+                      'Hồ sơ'}
+                </button>
+            `).join('')}
+        </div>`;
+        return html;
+    }
+    
+    // Nav Bar cho Ranking
+    function RankingNavBar(activeTab) {
+        const tabs = ['nhiem_vu', 'bxh_mentee', 'bxh_mentor'];
+        let html = `<div class="sticky top-10 bg-white/90 backdrop-blur-sm border-b border-gray-100 py-3 overflow-x-auto whitespace-nowrap z-10 px-4 hide-scrollbar" style="transition: all 0.3s;">
+            ${tabs.map(tab => `
+                <button onclick="navigate('ranking', {tab: '${tab}'})"
+                    class="${activeTab === tab ? 'bg-upskill-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'}
+                    font-medium text-sm px-4 py-2 rounded-full transition duration-150 inline-block">
+                    ${tab === 'nhiem_vu' ? 'Nhiệm vụ' : 
+                      tab === 'bxh_mentee' ? 'BXH Học viên' : 
+                      'BXH Mentor'}
+                </button>
+            `).join('')}
+        </div>`;
+        return html;
+    }
+
+
+    // Hàm hiển thị Modal Đặt lịch (Mục 2)
+    window.openBookingModal = (mentorName) => {
+        // ... (Logic đã được chuyển lên đầu cùng với state)
+        if (selectedSlots.length === 0) {
+            const messageEl = document.createElement('div');
+            messageEl.textContent = "Vui lòng chọn ít nhất một khung giờ!";
+            messageEl.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-3 rounded-lg shadow-xl z-50 animate-slide-up';
+            document.body.appendChild(messageEl);
+            setTimeout(() => messageEl.remove(), 2000);
+            return;
+        }
+
+        const mentor = MENTORS.find(m => m.name === mentorName);
+        const totalDuration = selectedSlots.length * 30; // 30 mins per slot
+        const totalPrice = selectedSlots.reduce((sum, slot) => sum + slot.price, 0);
+        const totalPriceVND = formatVND(totalPrice);
+        
+        const slotsDetail = selectedSlots.map(s => `${s.date.split(' ')[0]} ${s.time}`).join('; ');
+        
+        const modalHtml = `
+            <div id="booking-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-slide-up">
+                <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-sm transform scale-100 animate-tilt-in" style="animation-delay: 0.1s;">
+                    <h3 class="text-xl font-extrabold text-upskill-secondary border-b pb-2 mb-4">Xác nhận đặt lịch (${selectedSlots.length} slot)</h3>
+                    
+                    <div class="space-y-3 text-sm">
+                        <p class="font-bold text-gray-900">Mentor: ${mentorName}</p>
+                        <p class="text-gray-700">Khung giờ: <span class="font-semibold">${selectedSlots.length > 1 ? 'Xem chi tiết bên dưới' : slotsDetail}</span></p>
+                        <p class="text-gray-700">Thời lượng tổng: <span class="font-semibold">${totalDuration} phút</span></p>
+                        <p class="text-lg font-bold text-upskill-primary">Tổng phí dự kiến: ${totalPriceVND}</p>
+                        
+                        <div class="max-h-20 overflow-y-auto bg-gray-100 p-2 rounded-lg text-xs">
+                            <p class="font-semibold text-gray-700 mb-1">Chi tiết Slots:</p>
+                            ${selectedSlots.map(s => `<p class="text-gray-600">${s.date} - ${s.time}</p>`).join('')}
+                        </div>
+
+                        <textarea id="booking-notes" placeholder="Chủ đề cố vấn/Ghi chú (tối đa 120 ký tự)" 
+                                  class="w-full p-3 border border-gray-300 rounded-xl gradient-input resize-none" 
+                                  maxlength="120" rows="2"></textarea>
+                    </div>
+
+                    <div class="flex justify-between space-x-3 mt-6">
+                        <button onclick="closeModal()" class="flex-1 py-3 bg-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-300 transition">Hủy</button>
+                        <button onclick="confirmBooking('${mentorName}', ${totalPrice})" 
+                                class="shine-button flex-1 py-3 text-white font-bold rounded-xl">Tiến hành Thanh toán</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        appContainer.insertAdjacentHTML('beforeend', modalHtml);
+    }
+    
+    window.confirmBooking = (mentorName, totalPrice) => {
+        closeModal();
+        const notes = document.getElementById('booking-notes').value || 'Không có ghi chú.';
+        
+        // Giả lập flow chuyển sang Payment Gateway
+        const bookingMessage = document.createElement('div');
+        bookingMessage.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-upskill-secondary text-white p-4 rounded-xl shadow-2xl z-50 flex items-center space-x-2 animate-slide-up';
+        bookingMessage.innerHTML = `<svg class="w-6 h-6 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8.59l-9 9z"/></svg><span>Chuẩn bị giao dịch. Chuyển sang Thanh toán...</span>`;
+        document.body.appendChild(bookingMessage);
+
+        setTimeout(() => {
+            bookingMessage.remove();
+            // Chuyển sang màn hình Thanh toán
+            navigate('payment_gateway', { 
+                mentorName: mentorName, 
+                date: selectedSlots[0].date, // Lấy ngày đầu tiên
+                slot: `${selectedSlots.length} slot (${selectedSlots.length * 30} phút)`,
+                price: totalPrice 
+            });
+            selectedSlots = []; // Reset selected slots after moving to payment
+        }, 1500);
+    }
+
+    window.closeModal = (id = 'booking-modal-overlay') => {
+        const modal = document.getElementById(id);
+        if (modal) modal.remove();
+    }
+    
+    window.toggleCalendarView = (view) => {
+        currentCalendarView = view;
+        navigate('booking_mentee_calendar', { name: currentMentorBooking });
+    }
+
+
+    // Hàm mô phỏng Đặt lịch (Mentee Calendar View)
+    window.bookSlot = (mentorName, date, time, price) => {
+        const mentor = MENTORS.find(m => m.name === mentorName);
+        if (!mentor) return;
+        currentMentorBooking = mentorName; // Lưu mentor đang được chọn
+        
+        // Cập nhật lại flow: click vào slot chỉ toggle selection, nút Xác nhận mở modal
+        toggleSlotSelection(date, time, price, mentorName);
+    }
+    
+    // Mở Modal chi tiết giao dịch Blockchain cho Mentor
+    window.openTransactionDetail = (transactionId) => {
+        const slot = mentorSlots.find(s => s.id === transactionId);
+        if (!slot) return;
+        
+        const isConfirmed = slot.status === 'confirmed';
+        
+        const modalHtml = `
+            <div id="tx-detail-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-slide-up">
+                <div class="bg-upskill-navy-dark p-6 rounded-2xl shadow-2xl w-full max-w-sm text-white transform scale-100 animate-tilt-in" style="animation-delay: 0.1s;">
+                    <h3 class="text-xl font-extrabold text-upskill-accent border-b border-gray-700 pb-2 mb-4">Chi tiết Giao dịch</h3>
+                    
+                    <div class="space-y-3 text-sm">
+                        <p class="font-bold text-gray-300 flex justify-between">Mentee: <span>${slot.mentee}</span></p>
+                        <p class="text-gray-400 flex justify-between">Chủ đề: <span>${slot.subject || 'N/A'}</span></p>
+                        <p class="text-lg font-bold text-success-color flex justify-between">Số tiền: <span>${formatVND(slot.amount)}</span></p>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-gray-800 rounded-xl space-y-2">
+                        <p class="font-bold text-upskill-blue-light flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 15.5l-5-2.5v-3l5-2.5 5 2.5v3l-5 2.5z"/></svg>
+                            Trạng thái Blockchain:
+                        </p>
+                        <p class="text-xs ${isConfirmed ? 'text-success-color' : 'text-warning-color'} font-semibold">
+                            ${isConfirmed ? `Xác thực thành công ✅` : `Chờ xác nhận (Mentee chưa đánh giá)`}
+                        </p>
+                        <p class="font-mono text-xs text-gray-400 break-words">
+                            Mã Hash: ${slot.hash || 'N/A'}
+                        </p>
+                        <div class="data-beam-container">
+                             <div class="data-beam" style="animation: data-beam 2s linear infinite; ${isConfirmed ? 'background: linear-gradient(90deg, #10b981, #FFD700);' : ''}"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center space-x-3 mt-6">
+                        <button onclick="closeModal('tx-detail-modal-overlay')" class="py-3 px-6 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 transition">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        appContainer.insertAdjacentHTML('beforeend', modalHtml);
+    }
+    
+    // Cập nhật hàm closeModal để xử lý overlay theo ID
+    window.closeModal = (id = 'booking-modal-overlay') => {
+        const modal = document.getElementById(id);
+        if (modal) modal.remove();
+    }
+
+    // Hàm mô phỏng Xác nhận/Từ chối slot cho Mentor
+    window.handleMentorSlot = (index, action) => {
+        const slot = mentorSlots[index];
+        if (!slot) return;
+        
+        // Mô phỏng mã hash
+        const mockHash = '0x' + Math.random().toString(16).substring(2, 10) + '...';
+
+        if (slot.status === 'pending') {
+            if (action === 'confirm') {
+                slot.status = 'confirmed';
+                slot.hash = mockHash;
+                // Thay thế alert() bằng thông báo UI
+                const messageEl = document.createElement('div');
+                messageEl.textContent = 'Đã xác nhận buổi cố vấn với ' + slot.mentee + '.';
+                messageEl.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-success-color text-white p-3 rounded-lg shadow-xl z-50 animate-slide-up';
+                document.body.appendChild(messageEl);
+                setTimeout(() => messageEl.remove(), 3000);
+            } else if (action === 'reject') {
+                mentorSlots.splice(index, 1); // Xóa khỏi danh sách (từ chối)
+                 // Thay thế alert() bằng thông báo UI
+                const messageEl = document.createElement('div');
+                messageEl.textContent = 'Đã từ chối buổi cố vấn với ' + slot.mentee;
+                messageEl.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-3 rounded-lg shadow-xl z-50 animate-slide-up';
+                document.body.appendChild(messageEl);
+                setTimeout(() => messageEl.remove(), 3000);
+            }
+            // Tải lại màn hình Mentor Dashboard (tab lịch)
+            navigate('mentor_dashboard', { tab: 'lich_co_van' });
+        }
+    }
+
+
+    // Chọn vai trò Đăng ký (Register)
+    window.selectRole = (role) => {
+        registrationRole = role;
+        const menteeBtn = document.getElementById('role-mentee');
+        const mentorBtn = document.getElementById('role-mentor');
+        const roleTip = document.getElementById('role-tip');
+
+        if (menteeBtn && mentorBtn) {
+            if (role === 'mentee') {
+                // Giảm kích thước chữ cho nút
+                menteeBtn.classList.add('bg-upskill-blue-light', 'text-white', 'text-sm');
+                menteeBtn.classList.remove('text-gray-500', 'hover:bg-gray-100', 'bg-transparent', 'text-base');
+                mentorBtn.classList.add('text-gray-500', 'hover:bg-gray-100', 'bg-transparent', 'text-sm');
+                mentorBtn.classList.remove('bg-upskill-blue-light', 'text-white', 'text-base');
+
+                if (roleTip) roleTip.textContent = 'Học viên sẽ tiếp tục với bài đánh giá AI đầu tiên.';
+            } else {
+                mentorBtn.classList.add('bg-upskill-blue-light', 'text-white', 'text-sm');
+                mentorBtn.classList.remove('text-gray-500', 'hover:bg-gray-100', 'bg-transparent', 'text-base');
+                menteeBtn.classList.add('text-gray-500', 'hover:bg-gray-100', 'bg-transparent', 'text-sm');
+                menteeBtn.classList.remove('bg-upskill-blue-light', 'text-white', 'text-base');
+                if (roleTip) roleTip.textContent = 'Mentor sẽ được yêu cầu xác thực hồ sơ Blockchain.';
+            }
+        }
+    };
+
+    // Đăng xuất
+    window.logout = () => {
+        userId = null; 
+        userRole = 'mentee';
+        isMentorVerified = false;
+        navigate('auth');
+    }
+
+    // Giả lập Đăng nhập thành công
+    window.loginUser = (role) => {
+        userId = role === 'mentor' ? 'Mentor A' : 'Mentee B';
+        userRole = role;
+        // Giả lập trạng thái đã xác thực nếu đăng nhập vai trò mentor
+        isMentorVerified = (role === 'mentor'); 
+        navigate('dashboard');
+    }
+    
+    // Helper functions for content generation (initialized in previous steps)
+    function initializeTitleAnimation(elementId, text) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        let finalHtml = '';
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i] === ' ' ? '&nbsp;' : text[i];
+            finalHtml += `<span style="opacity: 0; display: inline-block; transform: translateY(5px); animation: slide-up 0.05s ease-out forwards ${i * 0.03}s;">${char}</span>`;
+        }
+        el.innerHTML = finalHtml;
+
+        // Chỉ thêm hiệu ứng shine sau khi typewriter xong và chỉ 1 lần (dùng cho welcome/register)
+        setTimeout(() => {
+            el.classList.add('shine-text');
+            // Thêm class animated để chạy shine animation.
+            // Nếu không phải màn hình Auth (Auth chỉ cần shine 1 lần rồi ngừng)
+            if(currentScreen === 'welcome' || (currentScreen === 'auth' && !document.getElementById('login-buttons').classList.contains('hidden'))) {
+                 el.classList.add('animated');
+            }
+            // Đảm bảo không chạy shine lặp lại cho Auth/Register sau khi nó đã hiển thị
+            if (currentScreen === 'auth') {
+                 el.classList.remove('animated'); 
+            }
+            
+        }, text.length * 30 + 300);
+
+        let styleEl = document.querySelector('style.shine-text-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.classList.add('shine-text-style');
+            styleEl.innerHTML = `.shine-text { background: linear-gradient(90deg, #FACC15, #FFFFFF, #FACC15); background-size: 200% auto; color: #FACC15; -webkit-background-clip: text; } .shine-text.animated { animation: shine forward; }`;
+            document.head.appendChild(styleEl);
+        }
+    }
+    
+    function StyledHeader(title, subtitle, gradientConfig, backScreen = null, icon = null) {
+        const { start, mid, end, subColor } = gradientConfig;
+        let backButton = '';
+        const backScreenName = backScreen ? backScreen : null; 
+        
+        // Custom Back Navigation Logic - SỬA LỖI: Thay Maps(...) bằng navigate(...)
+        let backAction = backScreenName ? `navigate('${backScreenName}')` : 'history.back()';
+        if (backScreenName) {
+            backButton = `<button onclick="${backAction}" class="text-gray-500 hover:text-upskill-primary font-medium flex items-center transition duration-150">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>`;
+        }
+        
+        const headerId = 'header-' + Math.random().toString(36).substr(2, 9);
+        // Style tag injection for unique gradient ID
+        let styleEl = document.querySelector(`style.header-style-${headerId}`);
+        if (!styleEl) {
+             styleEl = document.createElement('style');
+             styleEl.classList.add(`header-style-${headerId}`);
+             styleEl.innerHTML = `
+                .header-text-clip-${headerId} {
+                    background: linear-gradient(90deg, ${start}, ${mid || start}, ${end});
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                    background-size: 200% auto;
+                    letter-spacing: -0.05em; 
+                    display: inline-block;
+                    transition: all 0.5s;
+                    animation: shine 3s infinite linear;
+                }
+             `;
+             document.head.appendChild(styleEl);
+        }
+       
+        return `
+            <div class="styled-header p-4 bg-white backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100 animate-slide-up-slow">
+                ${backButton}
+                <div class="flex items-center space-x-2 mt-2">
+                     ${icon ? `<span class="text-xl ${end.includes('FFD700') ? 'text-upskill-accent' : 'text-upskill-primary'} animate-sparkle" style="animation-delay: 0.1s;">${icon}</span>` : ''}
+                    <h1 class="text-2xl font-extrabold uppercase header-text-clip-${headerId}" style="font-size: 1.875rem; text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        ${title}
+                    </h1>
+                </div>
+                <p class="text-xs italic mt-1 font-medium animate-slide-up" style="color: ${subColor || '#4b5563'}; animation-delay: 0.3s;">
+                    ${subtitle}
+                </p>
+            </div>
+        `;
+    }
+
+
+    // Hàm điều hướng chính
+    function navigate(screen, data = {}) {
+        let content = '';
+        currentScreen = screen;
+        
+        const navBar = document.getElementById('nav-bar');
+        const isFullPage = ['welcome', 'auth', 'mentor_onboarding', 'mentor_verifying', 'payment_gateway', 'payment_success'].includes(screen);
+        const isChatScreen = screen === 'chat';
+        
+        // --- LOGIC ẨN/HIỆN NAV BAR VÀ BUTTON ---
+        if (isFullPage || isChatScreen) {
+            if (navBar) navBar.style.display = 'none';
+            if (floatingChatButton) floatingChatButton.classList.add('hidden');
+        } else if (userRole === 'mentor') {
+            // MÀN HÌNH MENTOR: ẨN NAV BAR DƯỚI CÙNG
+             if (navBar) navBar.style.display = 'none';
+             if (floatingChatButton) floatingChatButton.classList.remove('hidden');
+             
+             if (!userId) { navigate('auth'); return; }
+             // Nếu là Mentor nhưng chưa xác thực, chuyển sang màn hình chờ xác thực
+             if (userRole === 'mentor' && !isMentorVerified && screen !== 'mentor_onboarding' && screen !== 'mentor_verifying') {
+                screen = 'mentor_verifying';
+            }
+        } 
+        else {
+            // MÀN HÌNH MENTEE: HIỆN NAV BAR DƯỚI CÙNG
+            if (navBar) navBar.style.display = 'flex';
+            if (floatingChatButton) floatingChatButton.classList.remove('hidden');
+
+            if (!userId) { navigate('auth'); return; }
+            
+            if (screen === 'ranking') { activeRankingTab = data.tab || 'nhiem_vu'; }
+            
+            NavBar(screen);
+        }
+        
+        // --- LOGIC CHUYỂN HƯỚNG DASHBOARD VÀ PROFILE (dựa trên vai trò) ---
+        if (screen === 'dashboard') {
+            if (userRole === 'mentor') {
+                activeMentorTab = data.tab || 'tong_quan';
+                navigate('mentor_dashboard', {tab: activeMentorTab});
+                return;
+            }
+            screen = 'mentee_dashboard';
+        }
+        
+        if (screen === 'profile') {
+            if (userRole === 'mentor') {
+                 navigate('mentor_dashboard', {tab: 'ho_so'});
+                 return;
+            }
+            screen = 'mentee_profile';
+        }
+        
+        // Xử lý chuyển hướng Booking List (Mentee)
+        if (screen === 'booking_list') {
+             screen = 'booking_mentor_list';
+        }
+        if (screen === 'booking_mentee') {
+            screen = 'booking_mentee_calendar';
+            // Đảm bảo currentMentorBooking được set khi chuyển sang màn hình calendar
+            currentMentorBooking = data.name; 
+        }
+
+        // --- LOGIC GẮN CSS CHO APP CONTAINER ---
+        const screenContentEl = document.getElementById('screen-content');
+        if (screenContentEl) {
+            // 3) Áp dụng nền gradient đồng nhất
+            screenContentEl.style.background = isFullPage ? 'none' : 'linear-gradient(135deg, #a7b4e6, #d7e1fe, #C9D6FF)';
+        }
+        
+        // Xử lý Status Bar
+        if (isFullPage) {
+            appContainer.classList.remove('pt-10', 'pb-24');
+            appContainer.classList.add('p-0');
+            statusBar.classList.remove('hidden'); 
+            statusBar.classList.add('text-white', 'bg-transparent');
+            statusBar.style.position = 'absolute';
+        } else {
+            // Xử lý padding cho các màn hình có Header và NavBar
+            if (screen === 'mentor_dashboard') {
+                appContainer.classList.add('pt-0', 'pb-0'); // Header is inside content
+            } else if (isChatScreen) {
+                 appContainer.classList.add('pt-0', 'pb-0');
+            }
+             else {
+                appContainer.classList.add('pt-0', 'pb-24'); // Header is inside content, padding bottom for nav
+            }
+            appContainer.classList.remove('p-0');
+            statusBar.classList.add('text-black'); // Ẩn status bar giả lập khi có header/content
+        }
+        
+        // --- SCREEN RENDERING ---
+
+        // 1. Onboarding / Welcome
+        if (screen === 'welcome') {
+            content = `
+                <div class="h-full w-full flex flex-col items-center justify-center p-8 text-center text-white relative overflow-hidden" 
+                     style="background: linear-gradient(135deg, #0B1E3C, #153E75, #A855F7, #5BA8FF);">
+                    <!-- Hiệu ứng hạt sáng (Particles) -->
+                    <div class="particle" style="top: 10%; left: 5%; animation-delay: 1s;"></div>
+                    <div class="particle" style="top: 80%; left: 90%; animation-delay: 3s;"></div>
+                    <div class="particle" style="top: 50%; left: 45%; animation-delay: 5s;"></div>
+                    <div class="particle" style="top: 30%; left: 70%; animation-delay: 0.5s;"></div>
+                    <div class="particle" style="top: 65%; left: 15%; animation-delay: 2s;"></div>
+
+
+                    <!-- Logo UPSKILL (Fade-in, Rotate nhẹ 5°, Glow loop) -->
+                    <div id="logo-wrapper" class="relative w-32 h-32 mb-6 opacity-0 animate-slide-up" style="animation-delay: 0.1s; transform: rotate(5deg);">
+                        <!-- Biểu tượng Kết nối Mentor-Mentee (Giao điểm/Tia sáng) -->
+                        <svg class="w-full h-full text-upskill-blue-light animate-glow-loop" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L1 21h22L12 2zm0 18l-8-14h16l-8 14z" fill="url(#welcome-logo-grad)" opacity="0.4"/>
+                            <path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" fill="#FFFFFF"/>
+                            <!-- Gradient cho logo -->
+                            <defs>
+                                <linearGradient id="welcome-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#A855F7;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#5BA8FF;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Hai điểm sáng (Mentee/Mentor nodes) -->
+                            <circle cx="6" cy="18" r="1.5" fill="#FACC15" class="animate-pulse-custom delay-100"></circle>
+                            <circle cx="18" cy="18" r="1.5" fill="#3B82F6" class="animate-pulse-custom delay-300"></circle>
+                            <circle cx="12" cy="6" r="1.5" fill="#22D3EE" class="animate-pulse-custom delay-500"></circle>
+                        </svg>
+                    </div>
+
+                    <!-- Tiêu đề Typewriter + Neon Glow -->
+                    <div class="typewriter-container h-14 overflow-visible">
+                        <h2 id="welcome-title" class="text-4xl font-extrabold mb-3 tracking-wide uppercase text-upskill-text-accent animate-neon-glow">
+                            <!-- Content injected by JS -->
+                        </h2>
+                    </div>
+                    
+                    <p class="text-lg font-light mb-8 opacity-90 animate-slide-up" style="animation-delay: 1.5s;">Nền tảng AI & Blockchain kết nối mentor – mentee, kiến tạo hành trình học tập minh bạch và hiện đại.</p>
+                    
+                    <div class="space-y-4 mb-12 w-full max-w-sm mx-auto">
+                        <!-- Feature List - Slide Up Sequential -->
+                        <div class="text-left flex items-center space-x-3 p-3 rounded-xl backdrop-blur-sm shadow-lg border border-upskill-blue-light/30 bg-white/10 animate-slide-up" style="animation-delay: 1.7s;">
+                            <span class="text-upskill-accent font-extrabold text-xl">1</span>
+                            <p class="font-semibold text-white">Định hướng AI: Cá nhân hóa lộ trình học tập.</p>
+                        </div>
+                        <div class="text-left flex items-center space-x-3 p-3 rounded-xl backdrop-blur-sm shadow-lg border border-upskill-blue-light/30 bg-white/10 animate-slide-up" style="animation-delay: 1.9s;">
+                            <span class="text-upskill-accent font-extrabold text-xl">2</span>
+                            <p class="font-semibold text-white">Mentor Blockchain: Hồ sơ & Uy tín được xác thực.</p>
+                        </div>
+                        <div class="text-left flex items-center space-x-3 p-3 rounded-xl backdrop-blur-sm shadow-lg border border-upskill-blue-light/30 bg-white/10 animate-slide-up" style="animation-delay: 2.1s;">
+                            <span class="text-upskill-accent font-extrabold text-xl">3</span>
+                            <p class="font-semibold text-white">Gamification: Học tập có động lực và điểm thưởng.</p>
+                        </div>
+                    </div>
+
+                    <!-- Nút Hành trình (Gradient Blue-Aqua + Shine) -->
+                    <button onclick="navigate('auth')" class="shine-button w-[calc(100%-65px)] py-4 text-white font-bold text-lg rounded-2xl shadow-2xl transition duration-300 transform hover:scale-[1.02] absolute bottom-12 left-1/2 -translate-x-1/2 max-w-sm" style="animation-delay: 2.3s;">
+                        BẮT ĐẦU HÀNH TRÌNH
+                    </button>
+                </div>
+            `;
+            setTimeout(() => {
+                const logoWrapper = document.getElementById('logo-wrapper');
+                if (logoWrapper) {
+                    logoWrapper.style.transform = 'rotate(0deg)';
+                    logoWrapper.style.transition = 'transform 1s cubic-bezier(0.25, 1, 0.5, 1)';
+                }
+                initializeTitleAnimation('welcome-title', 'UPSKILL');
+            }, 100);
+        } 
+        
+        // 2. Đăng nhập / Đăng ký
+        else if (screen === 'auth') {
+            // Re-apply background color for Auth screen
+            if (screenContentEl) screenContentEl.style.background = 'white';
+            
+            // Container nội dung chính không có overflow-y-auto
+            content = `
+                <div class="p-6 space-y-8 h-full bg-white pt-16">
+                    <!-- Tiêu đề Auth (dynamic) -->
+                    <div class="text-center">
+                         <div id="auth-logo-small" class="w-10 h-10 mx-auto mb-4 relative opacity-0 animate-slide-up" style="animation-delay: 0.1s;">
+                            <svg class="w-full h-full text-upskill-blue-light animate-glow-loop" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L1 21h22L12 2zm0 18l-8-14h16l-8 14z" fill="url(#auth-logo-grad-small)" opacity="0.4"/>
+                                <path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" fill="#3B82F6"/>
+                                <defs>
+                                    <linearGradient id="auth-logo-grad-small" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#22D3EE;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                         </div>
+                        <h1 id="auth-main-title" class="text-2xl font-extrabold text-gray-900 text-center uppercase">
+                            <!-- Content injected by JS -->
+                        </h1>
+                        <p id="auth-sub-title" class="text-sm text-gray-500 mt-1 italic"></p>
+                    </div>
+                    
+                    <p id="auth-error-message" class="text-red-500 font-medium text-center mb-4 hidden"></p>
+
+                    <div class="bg-gray-100 p-1 rounded-xl flex shadow-inner animate-tilt-in" style="animation-delay: 0.3s;">
+                        <button id="login-tab" class="flex-1 py-3 text-sm font-bold rounded-xl transition duration-200" onclick="switchAuth(true)">Đăng nhập</button>
+                        <button id="register-tab" class="flex-1 py-3 text-sm font-bold rounded-xl transition duration-200" onclick="switchAuth(false)">Đăng ký</button>
+                    </div>
+
+                    <form id="auth-form" class="space-y-4 animate-tilt-in" style="animation-delay: 0.5s;">
+                        <!-- Thêm Họ và Tên lên đầu form Đăng ký -->
+                        <div id="name-input" class="hidden space-y-4">
+                            <input type="text" id="auth-name" placeholder="Họ và Tên" class="w-full p-4 border border-gray-200 rounded-xl gradient-input focus:ring-upskill-blue-light transition" required>
+                        </div>
+
+                        <!-- Cập nhật placeholder để gợi ý mật khẩu demo -->
+                        <input type="email" id="auth-email" placeholder="Email (Dùng 'mentor@gmail.com' hoặc 'mentee@gmail.com')" class="w-full p-4 border border-gray-200 rounded-xl gradient-input focus:ring-upskill-blue-light transition" required>
+                        <input type="password" id="auth-password" placeholder="Mật khẩu (demo: 123456)" class="w-full p-4 border border-gray-200 rounded-xl gradient-input focus:ring-upskill-blue-light transition" required>
+                        
+                        
+                        <div id="role-selector" class="mt-4 p-3 bg-gray-100 rounded-xl hidden">
+                            <p class="text-sm font-semibold mb-3 text-gray-700">Bạn đăng ký với vai trò gì?</p>
+                            <div class="flex space-x-2 p-1 bg-white rounded-lg shadow-inner">
+                                <!-- Giảm kích thước chữ cho nút vai trò -->
+                                <button type="button" id="role-mentee" class="flex-1 py-2 text-sm rounded-lg font-bold transition duration-200" onclick="selectRole('mentee')">Học viên</button>
+                                <button type="button" id="role-mentor" class="flex-1 py-2 text-sm rounded-lg font-bold transition duration-200" onclick="selectRole('mentor')">Mentor</button>
+                            </div>
+                            <p id="role-tip" class="text-xs text-gray-500 mt-2">Học viên sẽ tiếp tục với bài đánh giá AI đầu tiên.</p>
+                        </div>
+                        
+                        <div id="login-buttons" class="space-y-4 pt-4">
+                            <button type="button" onclick="validateAndLogin()" class="shine-button w-full py-4 text-white font-bold text-lg rounded-2xl shadow-xl transition duration-300 transform hover:scale-[1.01]">
+                                ĐĂNG NHẬP
+                            </button>
+                        </div>
+
+                        <button id="register-submit-button" type="submit" class="shine-button w-full py-4 text-white font-bold text-lg rounded-2xl shadow-xl transition duration-300 transform hover:scale-[1.01] mt-8 hidden">
+                            ĐĂNG KÝ VÀ BẮT ĐẦU
+                        </button>
+                    </form>
+
+                    <p class="text-center text-sm text-gray-500">Hoặc tiếp tục với</p>
+                    <div class="flex justify-center space-x-4">
+                        <button class="interactive-card flex items-center justify-center w-[130px] py-3 border border-gray-200 rounded-xl hover:bg-gray-50"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" onerror="this.onerror=null; this.src='https://placehold.co/20x20/F472B6/ffffff?text=G'" alt="Google" class="w-5 h-5 mr-2"> Google</button>
+                        <button class="interactive-card flex items-center justify-center w-[130px] py-3 border border-gray-200 rounded-xl hover:bg-gray-50"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png" onerror="this.onerror=null; this.src='https://placehold.co/20x20/A855F7/ffffff?text=F'" alt="Facebook" class="w-5 h-5 mr-2"> Facebook</button>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                const nameInput = document.getElementById('name-input');
+                const roleSelector = document.getElementById('role-selector');
+                const errorMessage = document.getElementById('auth-error-message');
+                const authNameInput = document.getElementById('auth-name');
+                const authEmailInput = document.getElementById('auth-email');
+                const authPasswordInput = document.getElementById('auth-password');
+                const loginButtons = document.getElementById('login-buttons');
+                const registerSubmitButton = document.getElementById('register-submit-button');
+                const authForm = document.getElementById('auth-form');
+
+                if (authForm) {
+                    authForm.onsubmit = (e) => {
+                        e.preventDefault();
+                        const isRegistering = !nameInput.classList.contains('hidden');
+                        
+                        if (isRegistering) {
+                            if (!authEmailInput.value || !authPasswordInput.value || !authNameInput.value) {
+                                errorMessage.textContent = 'Vui lòng điền đầy đủ Email, Mật khẩu và Tên.';
+                                errorMessage.classList.remove('hidden');
+                                return;
+                            }
+                            errorMessage.classList.add('hidden');
+                            userId = 'user123'; 
+                            userRole = registrationRole;
+                            if (userRole === 'mentee') {
+                                navigate('ai_quiz');
+                            } else {
+                                isMentorVerified = false; 
+                                navigate('mentor_onboarding'); 
+                            }
+                        }
+                    };
+                }
+                
+                window.validateAndLogin = () => {
+                    if (!authEmailInput.value || !authPasswordInput.value) {
+                        errorMessage.textContent = 'Vui lòng điền đầy đủ Email và Mật khẩu.';
+                        errorMessage.classList.remove('hidden');
+                        return;
+                    }
+
+                    let role;
+                    const enteredEmail = authEmailInput.value.toLowerCase();
+                    const enteredPassword = authPasswordInput.value;
+                    
+                    // --- LOGIC KIỂM TRA ĐĂNG NHẬP DEMO (ĐÃ CẬP NHẬT) ---
+                    if (enteredEmail === "mentor@gmail.com" && enteredPassword === "123456") {
+                        role = "mentor";
+                    } else if (enteredEmail === "mentee@gmail.com" && enteredPassword === "123456") {
+                        role = "mentee";
+                    } else if (enteredEmail === "mentor@gmail.com" || enteredEmail === "mentee@gmail.com") {
+                        // Nếu email demo đúng nhưng mật khẩu sai
+                        errorMessage.textContent = 'Mật khẩu không đúng. Mật khẩu demo là: 123456';
+                        errorMessage.classList.remove('hidden');
+                        return;
+                    } else {
+                        errorMessage.textContent = 'Email không hợp lệ. Dùng mentor@gmail.com hoặc mentee@gmail.com.';
+                        errorMessage.classList.remove('hidden');
+                        return;
+                    }
+
+                    errorMessage.classList.add('hidden');
+                    loginUser(role);
+                }
+
+                window.switchAuth = (isLogin) => {
+                    const loginTab = document.getElementById('login-tab');
+                    const registerTab = document.getElementById('register-tab');
+                    const authTitle = document.getElementById('auth-main-title');
+                    const authSubTitle = document.getElementById('auth-sub-title');
+                    
+                    // Reset animation class for tilt transition
+                    if (authForm) {
+                        authForm.classList.remove('animate-tilt-in');
+                        void authForm.offsetWidth; // Trigger reflow
+                        authForm.classList.add('animate-tilt-in');
+                    }
+
+                    if (isLogin) {
+                        loginTab.classList.add('bg-white', 'shadow-md', 'text-upskill-blue-light');
+                        registerTab.classList.remove('bg-white', 'shadow-md', 'text-upskill-blue-light');
+                        registerTab.classList.add('text-gray-500');
+                        
+                        nameInput.classList.add('hidden');
+                        roleSelector.classList.add('hidden');
+                        loginButtons.classList.remove('hidden');
+                        registerSubmitButton.classList.add('hidden');
+                        
+                        // Update title for Login
+                        authTitle.textContent = "CHÀO MỪNG BẠN TRỞ LẠI";
+                        authSubTitle.textContent = "Sẵn sàng cho những thử thách mới?";
+                        authTitle.classList.remove('shine-text');
+                        authTitle.classList.remove('animated'); // Đảm bảo không chạy shine
+
+                    } else {
+                        registerTab.classList.add('bg-white', 'shadow-md', 'text-upskill-blue-light');
+                        loginTab.classList.remove('bg-white', 'shadow-md', 'text-upskill-blue-light');
+                        loginTab.classList.add('text-gray-500');
+                        
+                        nameInput.classList.remove('hidden');
+                        roleSelector.classList.remove('hidden');
+                        loginButtons.classList.add('hidden');
+                        registerSubmitButton.classList.remove('hidden');
+                        
+                        // Update title for Register (Typewriter/Shimmer effect)
+                        authTitle.textContent = ''; // Clear for typewriter effect
+                        authSubTitle.textContent = "Khám phá hành trình mới cùng Mentor của bạn";
+                        initializeTitleAnimation('auth-main-title', "CHÀO MỪNG BẠN ĐẾN VỚI UPSKILL");
+                        
+                        selectRole(registrationRole); 
+                    }
+                };
+                
+                switchAuth(true); // Mặc định là màn hình đăng nhập
+            }, 0);
+        }
+
+        // 3. AI Quiz (Dành cho Mentee sau khi Đăng ký)
+        else if (screen === 'ai_quiz') {
+            content = `
+                ${StyledHeader(
+                    'Đánh giá năng lực AI ⚡', 
+                    'Hoàn tất bài Quiz để AI cá nhân hoá lộ trình của bạn.', 
+                    { start: '#a855f7', mid: '#3B82F6', end: '#22D3EE', subColor: '#4f46e5' }, 
+                    'dashboard', 
+                    '✨'
+                )}
+                <div class="p-6 space-y-6 h-full">
+                    <div class="p-6 bg-white rounded-2xl shadow-lg border border-upskill-secondary/20 interactive-card animate-slide-up" style="animation-delay: 0.2s">
+                        <p class="text-sm font-semibold text-upskill-primary mb-2">Quiz Cá nhân hoá</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Câu hỏi 1/5: Lĩnh vực nào bạn muốn theo đuổi nhất trong 5 năm tới?</h3>
+                        <div class="space-y-3">
+                            <button class="interactive-card w-full p-3 text-left border-2 border-upskill-primary/50 text-gray-700 font-medium rounded-xl bg-upskill-primary/10 transition duration-150 hover:bg-upskill-primary/20">Công nghệ & Phần mềm (AI, Blockchain)</button>
+                            <button class="interactive-card w-full p-3 text-left border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100">Tài chính & Ngân hàng</button>
+                            <button class="interactive-card w-full p-3 text-left border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100">Marketing & Truyền thông</button>
+                            <button class="interactive-card w-full p-3 text-left border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100">Thiết kế (UX/UI, Đồ hoạ)</button>
+                        </div>
+                    </div>
+
+                    <div class="interactive-card p-4 bg-yellow-100 border-l-4 border-warning-color rounded-xl shadow-md animate-slide-up" style="animation-delay: 0.3s">
+                        <p class="font-semibold text-gray-800">Cần hỗ trợ?</p>
+                        <p class="text-sm text-gray-600">Chat với AI để được giải thích thêm về các lựa chọn!</p>
+                        <button onclick="navigate('chat', {mode: 'ai', back: 'dashboard'})" class="mt-3 text-sm font-bold text-warning-color hover:text-upskill-primary transition">
+                            Chatbot AI 24/7
+                        </button>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-4 pb-8 animate-slide-up" style="animation-delay: 0.4s">
+                        <button onclick="navigate('dashboard')" class="text-gray-500 font-medium hover:text-gray-700">Bỏ qua Quiz</button>
+                        <button onclick="navigate('dashboard')" class="shine-button px-6 py-3 text-white font-bold rounded-full shadow-lg transition duration-300 hover:opacity-90">
+                            Tiếp theo (Hoàn thành)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 4. Trang chủ Học viên (mentee_dashboard)
+        else if (screen === 'mentee_dashboard') {
+            const greeting = 'Xin chào, Học viên!';
+            const dashboardContent = `
+                <div class="interactive-card bg-gradient-to-br from-upskill-gradient-start to-upskill-gradient-end p-5 rounded-2xl shadow-xl text-white transform hover:scale-[1.03] animate-slide-up" style="animation-delay: 0.1s">
+                    <h2 class="text-lg font-bold mb-1 opacity-90">Tiến trình học tập</h2>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-2xl font-extrabold">Cấp độ 4: Chuyên gia Khởi đầu</span>
+                        <span class="text-4xl font-extrabold text-upskill-accent animate-pulse-custom">750 ✨</span>
+                    </div>
+                    <div class="w-full bg-white/30 rounded-full h-2.5">
+                        <div class="bg-white h-2.5 rounded-full" style="width: 75%"></div>
+                    </div>
+                    <p class="text-sm mt-1 opacity-80">75% đạt Level 5 (Cần 1000 điểm)</p>
+                    <button onclick="navigate('ranking', {tab: 'nhiem_vu'})" class="mt-4 text-xs font-bold bg-upskill-accent text-white px-3 py-1.5 rounded-full shadow-lg transition duration-150 hover:bg-warning-color animate-breathe">
+                        Xem Nhiệm vụ & Xếp hạng
+                    </button>
+                </div>
+                
+                <h2 class="text-xl font-bold text-gray-900 pt-2 animate-slide-up" style="animation-delay: 0.2s">Lộ trình cá nhân hóa</h2>
+                <div class="space-y-3">
+                    <div class="interactive-card bg-white p-4 rounded-xl shadow-md border-l-4 border-upskill-primary/80 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.25s">
+                        <h3 class="font-bold text-upskill-primary">Kỹ năng mục tiêu: Backend & Blockchain</h3>
+                        <p class="text-sm text-gray-600 mt-1">Gợi ý khóa học: Lập trình Web với React (70% hoàn thành)</p>
+                    </div>
+                    <div class="interactive-card bg-white p-4 rounded-xl shadow-md border-l-4 border-warning-color/80 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.3s">
+                        <h3 class="font-bold text-warning-color">Gợi ý AI: Kỹ năng Mềm</h3>
+                        <p class="text-sm text-gray-600 mt-1">Tham gia workshop "Giao tiếp Hiệu quả" để tăng cơ hội kết nối với Mentor VIP.</p>
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-bold text-gray-900 pt-2 animate-slide-up" style="animation-delay: 0.35s">Mentor được gợi ý <span class="text-sm text-upskill-primary">(Dựa trên AI)</span></h2>
+                <div class="space-y-4">
+                    ${MENTORS.slice(0, 3).map((mentor, index) => `
+                         <div class="interactive-card bg-white p-4 rounded-2xl shadow-lg flex items-center justify-between border-b-2 ${mentor.verified ? 'border-success-color/50' : 'border-gray-200'} transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.4 + index * 0.05}s">
+                            <div onclick="navigate('mentor_detail', {name: '${mentor.name}'})" class="flex items-center space-x-3 cursor-pointer">
+                                <img class="w-14 h-14 rounded-full object-cover p-1 ring-2 ${mentor.verified ? 'ring-success-color animate-glowing-node' : 'ring-gray-300'}" src="https://placehold.co/150x150/${mentor.color.substring(1)}/ffffff?text=${mentor.avatar}" alt="Avatar">
+                                <div>
+                                    <p class="font-bold text-lg text-gray-900">${mentor.name} ${mentor.verified ? `<span class="text-xs font-semibold text-success-color bg-green-100 px-2 py-0.5 rounded-full">Đã xác thực</span>` : ''}</p>
+                                    <p class="text-sm text-gray-600">${mentor.role}</p>
+                                    <p class="text-xs text-upskill-accent font-medium">Điểm chất lượng: ${mentor.quality}/100</p>
+                                </div>
+                            </div>
+                            <button onclick="navigate('booking_mentee', {name: '${mentor.name}'})" class="interactive-card bg-upskill-primary text-white p-2 rounded-full shadow-md hover:bg-upskill-secondary transition duration-150">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M16 11h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            content = `
+                ${StyledHeader(
+                    greeting, 
+                    'Bắt đầu hành trình phát triển kỹ năng và kết nối mentor của bạn.', 
+                    { start: '#6366f1', mid: '#8b5cf6', end: '#a855f7', subColor: '#4f46e5' }, 
+                    null, 
+                    '👋'
+                )}
+                <div class="p-4 space-y-6 pb-20">
+                    ${dashboardContent}
+                </div>
+            `;
+        }
+
+        // 5. Trang chủ Mentor (mentor_dashboard) - Cập nhật tab lịch cố vấn
+        else if (screen === 'mentor_dashboard') {
+            const greeting = 'Chào mừng, Mentor';
+            const activeTab = data.tab || 'tong_quan';
+            activeMentorTab = activeTab;
+            let tabContent = '';
+            
+            // --- NỘI DUNG CÁC TAB CỦA MENTOR ---
+            
+            if (activeTab === 'tong_quan') {
+                 // ... (Giữ nguyên nội dung)
+                tabContent = `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Card Doanh thu -->
+                            <div class="interactive-card bg-gradient-to-br from-mentor-card-start to-mentor-card-end p-4 rounded-2xl shadow-xl text-white border-b-4 border-upskill-accent/80 transform hover:scale-[1.02] animate-slide-up" style="animation-delay: 0.1s">
+                                <p class="text-xs font-semibold opacity-80">Thu nhập tháng này</p>
+                                <h3 class="text-2xl font-extrabold mt-1">12.500K VNĐ</h3>
+                                <p class="text-xs font-bold mt-2 flex items-center">
+                                    <span class="text-mentor-data-1 mr-1">▲</span> 
+                                    +25% so với tháng trước
+                                </p>
+                            </div>
+                            <!-- Card Giờ cố vấn -->
+                            <div class="interactive-card bg-white p-4 rounded-2xl shadow-xl border-b-4 border-upskill-primary/80 transform hover:scale-[1.02] animate-slide-up" style="animation-delay: 0.15s">
+                                <p class="text-xs font-semibold text-gray-500">Giờ Cố vấn (Tổng)</p>
+                                <h3 class="text-2xl font-extrabold text-upskill-primary mt-1">85 giờ</h3>
+                                <p class="text-xs text-gray-500 font-bold mt-2">Đã hoàn thành 95% yêu cầu</p>
+                            </div>
+                        </div>
+
+                        <button class="shine-button w-full py-3 bg-upskill-accent text-white font-bold rounded-xl shadow-lg mt-4 animate-breathe animate-slide-up" onclick="/* Tùy chỉnh trạng thái sẵn sàng */">
+                            ĐẶT TRẠNG THÁI SẴN SÀNG
+                        </button>
+
+                        <h2 class="text-xl font-bold text-gray-900 pt-2 animate-slide-up" style="animation-delay: 0.25s">Yêu cầu Mentoring mới (2)</h2>
+                        <div class="space-y-3">
+                            <div class="interactive-card bg-white p-4 rounded-xl shadow-lg flex justify-between items-center border-l-4 border-warning-color/70 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.3s">
+                                <div>
+                                    <p class="font-bold text-gray-900">Nguyễn Văn Cường</p>
+                                    <p class="text-sm text-gray-600">Cần cố vấn về Solidity Smart Contract</p>
+                                </div>
+                                <button class="text-sm font-bold text-upskill-primary hover:underline">Xem</button>
+                            </div>
+                            <div class="interactive-card bg-white p-4 rounded-xl shadow-lg flex justify-between items-center border-l-4 border-warning-color/70 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.35s">
+                                <div>
+                                    <p class="font-bold text-gray-900">Đỗ Thị Yến Nhi</p>
+                                    <p class="text-sm text-gray-600">Cần cố vấn về Phân tích đối thủ cạnh tranh</p>
+                                </div>
+                                <button class="text-sm font-bold text-upskill-primary hover:underline">Xem</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (activeTab === 'lich_co_van') {
+                 // NỘI DUNG Lịch cá nhân
+                 const timeSlots = Array.from({ length: 12 }, (_, i) => 8 + i); // 8h - 19h (12 slots)
+                 const currentWeekDays = getCurrentWeekDays();
+
+                 const getSlotClass = (day, timeIndex) => {
+                    const startTime = `${timeIndex < 10 ? '0' : ''}${timeIndex}:00 - ${timeIndex < 9 ? '0' : ''}${timeIndex + 1}:00`;
+                    const slot = mentorSlots.find(s => s.day === day.short && s.time === startTime); // Sửa day.day -> day.short
+                    
+                    if (!slot) return 'slot-empty';
+                    if (slot.status === 'available') return 'slot-available hover:shadow-lg hover:border-upskill-secondary';
+                    if (slot.status === 'pending') return 'slot-pending hover:shadow-lg hover:border-upskill-secondary';
+                    if (slot.status === 'confirmed') return 'slot-confirmed';
+                    if (slot.status === 'occupied') return 'slot-occupied';
+                    return 'slot-empty';
+                 };
+
+                 const getSlotContent = (day, timeIndex) => {
+                     const startTime = `${timeIndex < 10 ? '0' : ''}${timeIndex}:00 - ${timeIndex < 9 ? '0' : ''}${timeIndex + 1}:00`;
+                     const slot = mentorSlots.find(s => s.day === day.short && s.time === startTime); // Sửa day.day -> day.short
+                     const slotIndex = mentorSlots.indexOf(slot); // Lấy index để truyền vào hàm handleMentorSlot
+
+                     if (!slot) return '';
+                     
+                     let content = '';
+                     if (slot.status === 'available') {
+                        content = `<button class="text-xs text-calendar-available-text px-1" onclick="/* Open Add Slot Modal */">Trống</button>`;
+                     }
+                     else if (slot.status === 'pending') {
+                         content = `<button class="text-xs text-calendar-pending-text px-1" onclick="handleMentorSlot(${slotIndex}, 'confirm')">Chờ: ${slot.mentee.split(' ')[0]}...</button>`;
+                     } else if (slot.status === 'confirmed') {
+                         content = `<button class="text-xs text-calendar-booked-text px-1" onclick="openTransactionDetail(${slot.id})">✅ ${slot.mentee.split(' ')[0]}</button>`;
+                     } else if (slot.status === 'occupied') {
+                         content = `<span class="text-xs text-calendar-busy-text">Bận</span>`;
+                     }
+                     return content;
+                 }
+
+
+                 // Lấy các yêu cầu chờ duyệt
+                 const pendingRequests = mentorSlots.filter(s => s.status === 'pending');
+                 
+
+                 tabContent = `
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-bold text-gray-900 animate-slide-up" style="animation-delay: 0.1s">Lịch Cố vấn Cá nhân</h2>
+                        
+                        <div class="flex justify-between items-center bg-gray-100 p-3 rounded-xl shadow-inner animate-slide-up" style="animation-delay: 0.15s">
+                            <h3 class="text-sm font-bold text-gray-700">Tuần hiện tại (19/10 - 25/10)</h3>
+                             <!-- Toggle View -->
+                            <div class="flex text-xs font-semibold space-x-1">
+                                <button onclick="/* currentCalendarView = 'month' */" class="px-2 py-1 rounded-full bg-gray-200 text-gray-600">Tháng</button>
+                                <button onclick="/* currentCalendarView = 'week' */" class="px-2 py-1 rounded-full bg-upskill-primary text-white">Tuần</button>
+                                <button onclick="/* currentCalendarView = 'day' */" class="px-2 py-1 rounded-full bg-gray-200 text-gray-600">Ngày</button>
+                            </div>
+                        </div>
+
+                        <!-- CỘT CHỜ DUYỆT (List on the side) -->
+                        <div class="p-4 bg-white rounded-xl shadow-lg border-l-4 border-upskill-secondary animate-slide-up" style="animation-delay: 0.2s">
+                            <div class="flex justify-between items-center mb-3 border-b pb-2">
+                                <h3 class="font-bold text-upskill-secondary flex items-center">
+                                     <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
+                                    Yêu cầu chờ duyệt (${pendingRequests.length})
+                                </h3>
+                                <!-- AI Toggle -->
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-gray-500">🧠 AI Đồng bộ</span>
+                                    <input type="checkbox" id="ai-sync-toggle" class="form-checkbox h-4 w-4 text-upskill-primary rounded border-gray-300 focus:ring-upskill-primary">
+                                </div>
+                            </div>
+                            
+                            ${pendingRequests.length > 0 ? pendingRequests.map((slot, index) => {
+                                 const slotIndex = mentorSlots.indexOf(slot);
+                                 return `
+                                    <div class="p-3 bg-calendar-pending-bg rounded-lg mb-2 shadow-sm border border-upskill-secondary/50 animate-slide-up" style="animation-delay: ${0.25 + index * 0.05}s">
+                                        <p class="font-bold text-gray-900">${slot.day}, ${slot.time}</p>
+                                        <p class="text-sm text-gray-700">Mentee: ${slot.mentee}</p>
+                                        <p class="text-xs text-gray-500 italic">Chủ đề: Career Direction</p>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="handleMentorSlot(${slotIndex}, 'confirm')" class="flex-1 py-1 text-xs bg-success-color text-white rounded-full font-bold interactive-card">Xác nhận ✅</button>
+                                            <button onclick="handleMentorSlot(${slotIndex}, 'reject')" class="flex-1 py-1 text-xs bg-red-500 text-white rounded-full font-bold interactive-card">Từ chối ❌</button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : `<p class="text-sm text-gray-500 italic text-center">Không có yêu cầu chờ duyệt nào.</p>`}
+                        </div>
+
+                        <!-- CALENDAR GRID VIEW (Main Content) -->
+                        <div class="overflow-x-auto hide-scrollbar">
+                            <div class="calendar-grid min-w-[500px]">
+                                <!-- Header Row -->
+                                <div class="calendar-header">Giờ</div>
+                                ${currentWeekDays.map(day => 
+                                    // 1) Sửa lỗi "Thứ 13/14/15..." -> T2 13/01, T3 14/01...
+                                    `<div class="calendar-header ${day.isToday ? 'bg-upskill-primary/10 text-upskill-primary border-b-2 border-upskill-primary' : ''}">${day.short}<br><span class="font-normal text-[0.6rem]">${day.date}</span></div>`
+                                ).join('')}
+
+                                <!-- Time Slot Rows -->
+                                ${timeSlots.map(hour => 
+                                    `
+                                    <div class="time-label border-r border-gray-200">
+                                        ${hour < 10 ? '0' : ''}${hour}:00
+                                    </div>
+                                    ${currentWeekDays.map(day => `
+                                        <div class="calendar-slot ${getSlotClass(day, hour)} ${day.isToday ? 'bg-upskill-primary/5' : 'bg-white'}">
+                                            ${getSlotContent(day, hour)}
+                                        </div>
+                                    `).join('')}
+                                    `
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                 `;
+            } else if (activeTab === 'mentee_list') {
+                // ... (Giữ nguyên nội dung)
+                tabContent = `
+                    <h2 class="text-xl font-bold text-gray-900 mb-4 animate-slide-up" style="animation-delay: 0.1s">Danh sách Mentee đang theo dõi</h2>
+                    <div class="space-y-3">
+                        ${MENTEES.slice(0, 4).map((mentee, index) => `
+                            <div class="interactive-card bg-white p-4 rounded-xl shadow-lg flex justify-between items-center border-l-4 border-mentor-card-end/50 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.15 + index * 0.05}s">
+                                <div class="w-full">
+                                    <p class="font-bold text-gray-900">${mentee.name}</p>
+                                    <p class="text-sm text-gray-600 mt-1">Mục tiêu: ${mentee.skill}</p>
+                                    <div class="flex items-center space-x-2 mt-2">
+                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                            <div class="bg-upskill-secondary h-1.5 rounded-full" style="width: ${mentee.progress}%"></div>
+                                        </div>
+                                        <span class="text-xs font-semibold text-upskill-primary">${mentee.progress}%</span>
+                                    </div>
+                                    
+                                </div>
+                                <button class="text-xs font-bold text-upskill-accent hover:underline ml-4">Chi tiết</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (activeTab === 'tai_nguyen') {
+                 // ... (Giữ nguyên nội dung)
+                tabContent = `
+                    <h2 class="text-xl font-bold text-gray-900 mb-4 animate-slide-up" style="animation-delay: 0.1s">Tài nguyên Chia sẻ (Cho Mentee)</h2>
+                    <div class="space-y-4">
+                        <!-- PDF Template -->
+                        <div class="interactive-card bg-white p-4 rounded-xl shadow-lg flex items-center border-l-4 border-red-500 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.15s">
+                            <svg class="w-8 h-8 text-red-500 mr-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                            <div>
+                                <h3 class="font-bold text-gray-900">Template CV Chuyên nghiệp (PDF)</h3>
+                                <p class="text-sm text-gray-600">Dành cho sinh viên Tech/Fintech</p>
+                            </div>
+                            <button class="ml-auto text-upskill-accent hover:text-warning-color text-xs font-bold">Tải xuống</button>
+                        </div>
+                        <!-- Video Guide -->
+                         <div class="interactive-card bg-white p-4 rounded-xl shadow-lg flex items-center border-l-4 border-upskill-secondary transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.2s">
+                            <svg class="w-8 h-8 text-upskill-secondary mr-4" fill="currentColor" viewBox="0 0 24 24"><path d="M10 8l6 4-6 4V8zm11-5H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
+                            <div>
+                                <h3 class="font-bold text-gray-900">Video: Bí quyết Phỏng vấn Ứng viên</h3>
+                                <p class="text-sm text-gray-600">45 phút - Hướng dẫn từ Senior Recruiter</p>
+                            </div>
+                            <button class="ml-auto text-upskill-accent hover:text-warning-color text-xs font-bold">Xem</button>
+                        </div>
+                        <button class="shine-button w-full py-3 bg-upskill-primary text-white font-bold rounded-xl shadow-lg mt-4 animate-slide-up" style="animation-delay: 0.25s">
+                            TẢI LÊN TÀI NGUYÊN MỚI
+                        </button>
+                    </div>
+                `;
+            } else if (activeTab === 'bao_cao') {
+                 // NỘI DUNG MỚI: Báo cáo & Giao dịch (P.3)
+                 const totalEarnings = mentorSlots.filter(s => s.status === 'confirmed').reduce((sum, s) => sum + s.amount, 0);
+                 const pendingConfirmation = mentorSlots.filter(s => s.status === 'pending').length;
+                 const confirmedTransactions = mentorSlots.filter(s => s.status === 'confirmed' || s.status === 'pending').slice(0, 4);
+                 
+                 tabContent = `
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-bold text-gray-900 animate-slide-up" style="animation-delay: 0.1s">Doanh thu & Giao dịch</h2>
+                        
+                        <!-- Doanh thu tổng quan -->
+                        <div class="interactive-card bg-gradient-to-br from-[#223352] to-[#3B5A8F] p-5 rounded-2xl shadow-xl text-white border-b-4 border-upskill-accent/80 transform hover:scale-[1.03] animate-slide-up" style="animation-delay: 0.15s">
+                            <p class="text-xs font-semibold opacity-80">Doanh thu khả dụng (Đã xác nhận Blockchain)</p>
+                            <h3 class="text-3xl font-extrabold mt-1 text-upskill-accent">${formatVND(totalEarnings)}</h3>
+                            <p class="text-sm mt-1 opacity-90">${pendingConfirmation} phiên cố vấn đang chờ xác nhận.</p>
+                            
+                            <div class="w-full h-8 mt-4">
+                                <!-- Sparkline Chart Mockup -->
+                                <svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none" style="opacity: 0.7;">
+                                    <polyline fill="none" stroke="#22D3EE" stroke-width="1.5" points="0,25 20,5 40,20 60,10 80,25 100,5" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Danh sách Giao dịch -->
+                        <h3 class="text-lg font-bold text-gray-900 mt-6 animate-slide-up" style="animation-delay: 0.2s">Lịch sử Giao dịch (Đã thanh toán)</h3>
+                        <div class="space-y-2">
+                             ${confirmedTransactions.map((slot, index) => `
+                                <div onclick="openTransactionDetail(${slot.id})" class="interactive-card bg-white p-3 rounded-xl shadow-md flex justify-between items-center border-l-4 ${slot.status === 'confirmed' ? 'border-success-color' : 'border-warning-color'} transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.25 + index * 0.05}s">
+                                    <div>
+                                        <p class="font-bold text-gray-900">${slot.day}, ${slot.time}</p>
+                                        <p class="text-sm text-gray-600">${slot.mentee} - ${slot.subject}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold ${slot.status === 'confirmed' ? 'text-success-color' : 'text-warning-color'}">${formatVND(slot.amount)}</p>
+                                        <p class="text-xs text-gray-500">${slot.status === 'confirmed' ? 'Xác thực ✅' : 'Chờ duyệt ⏳'}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Nút Rút tiền -->
+                         <div class="p-4 bg-gray-100 rounded-xl shadow-inner mt-6 animate-slide-up" style="animation-delay: 0.4s">
+                            <p class="text-sm font-semibold text-gray-700">Số tiền có thể rút: ${formatVND(totalEarnings)}</p>
+                            <div class="mt-3 flex items-start space-x-2">
+                                <input type="checkbox" id="withdraw-commitment" class="mt-1 form-checkbox h-4 w-4 text-upskill-accent rounded border-gray-300 focus:ring-upskill-accent">
+                                <label for="withdraw-commitment" class="text-xs text-gray-600 font-medium">Tôi chịu trách nhiệm với các thông tin cố vấn đã chia sẻ và đồng ý rút tiền.</label>
+                            </div>
+                        </div>
+
+                        <button onclick="/* Simulate Withdrawal */" class="shine-button w-full py-4 text-white font-bold text-lg rounded-2xl shadow-lg mt-4 animate-slide-up" style="background: linear-gradient(90deg, #22D3EE, #FFD700, #F97316); animation-delay: 0.45s;">
+                            RÚT TIỀN VỀ TÀI KHOẢN
+                        </button>
+                    </div>
+                `;
+            } 
+            
+            // --- TAB HỒ SƠ MENTOR ĐỘC LẬP (5) ---
+            else if (activeTab === 'ho_so') {
+                 const mentor = MENTORS.find(m => m.name === 'Trần Tuấn Anh') || MENTORS[0]; // Dùng 1 mentor giả lập
+                const mentorAvatar = mentor.avatar;
+                
+                tabContent = `
+                    <div class="p-0 space-y-4 pb-0">
+                        <div class="glass-card p-6 text-center transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.1s">
+                             <img class="w-24 h-24 rounded-full object-cover mx-auto p-1 mb-3 ring-4 ring-upskill-secondary avatar-glow" src="https://placehold.co/200x200/4F46E5/ffffff?text=${mentorAvatar}" alt="Avatar">
+                            <h2 class="text-3xl font-extrabold text-gray-900" style="text-shadow: 0 1px 2px rgba(0,0,0,0.1);">${mentor.name}</h2>
+                            <p class="text-lg text-upskill-primary font-semibold mt-1">Mentor ID: MTR45678</p>
+                            
+                             <!-- Badge trạng thái -->
+                            <div class="inline-flex items-center ${mentor.verified ? 'bg-green-100 text-success-color' : 'bg-yellow-100 text-warning-color'} font-bold px-4 py-2 mt-4 rounded-full shadow-md text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8.59l-9 9z"/></svg>
+                                Hồ sơ ${mentor.verified ? 'ĐÃ XÁC THỰC (Blockchain)' : 'ĐANG CHỜ XÁC THỰC'}
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold text-gray-900 mt-6 mb-3 px-4 animate-slide-up" style="animation-delay: 0.2s">Tín nhiệm & Hiệu suất</h3>
+                        <div class="space-y-3 px-4">
+                            <div class="glass-card p-4 flex items-center space-x-3 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.25s">
+                                <span class="text-xl text-upskill-accent">🌟</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Đánh giá trung bình: <span class="font-extrabold">4.9/5.0</span></p>
+                                    <p class="text-xs text-gray-500">Đã cố vấn cho 35 mentee</p>
+                                </div>
+                            </div>
+                             <div class="glass-card p-4 flex items-center space-x-3 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.3s">
+                                <span class="text-xl text-upskill-secondary">⏱️</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Tỉ lệ hoàn thành buổi: <span class="font-extrabold">98%</span></p>
+                                    <p class="text-xs text-gray-500">Tổng giờ cố vấn: 85 giờ</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold text-gray-900 mt-6 mb-3 px-4 animate-slide-up" style="animation-delay: 0.35s">Chuyên môn & Sẵn sàng</h3>
+                        <div class="space-y-3 px-4">
+                            <div class="glass-card p-4 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.4s">
+                                <p class="font-semibold text-gray-800 mb-2">Lĩnh vực tư vấn:</p>
+                                <div class="flex flex-wrap gap-2">
+                                     <span class="bg-upskill-primary/30 text-sm font-medium px-3 py-1 rounded-full text-upskill-primary font-bold">Backend</span>
+                                     <span class="bg-upskill-secondary/30 text-sm font-medium px-3 py-1 rounded-full text-upskill-secondary font-bold">AI/ML</span>
+                                     <span class="bg-success-color/30 text-sm font-medium px-3 py-1 rounded-full text-success-color font-bold">Blockchain/Solidity</span>
+                                </div>
+                                <p class="font-semibold text-gray-800 mt-3">Mức phí: <span class="font-extrabold text-upskill-accent">${formatVND(mentor.price)} / giờ</span></p>
+                            </div>
+                             <div class="glass-card flex justify-between items-center p-4 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.45s">
+                                <p class="font-semibold text-gray-800 flex items-center">
+                                    <span class="text-xl mr-2">🟢</span>
+                                    Trạng thái: <span id="mentor-status-dashboard" class="text-success-color font-bold ml-1">Sẵn sàng</span>
+                                </p>
+                                <button id="toggle-status-dashboard" class="px-4 py-2 bg-upskill-accent text-white font-bold rounded-full text-sm shadow-md hover:bg-warning-color transition">
+                                    Đặt Sang "Bận/Nghỉ"
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Nút CTA -->
+                        <div class="flex flex-col space-y-3 px-4 pt-6 pb-8">
+                             <button onclick="navigate('mentor_dashboard', {tab: 'lich_co_van'})" class="shine-button w-full py-3 bg-upskill-primary text-white font-bold text-lg rounded-xl shadow-lg transition duration-300 hover:opacity-90">
+                                XEM LỊCH TRỐNG
+                            </button>
+                             <button onclick="/* Open policy modal */" class="w-full py-3 bg-gray-200 text-gray-700 font-bold rounded-xl text-sm shadow-md hover:bg-gray-300 transition">
+                                Chính sách & Trách nhiệm chia sẻ
+                            </button>
+                            <button onclick="logout()" class="w-full py-3 mt-4 bg-red-600 text-white font-bold text-lg rounded-xl shadow-lg transition duration-300 hover:bg-red-700">
+                                ĐĂNG XUẤT
+                            </button>
+                        </div>
+                    </div>
+                `;
+                 setTimeout(() => {
+                    const statusButton = document.getElementById('toggle-status-dashboard');
+                    const statusText = document.getElementById('mentor-status-dashboard');
+                    
+                    let isAvailable = true; // Giả lập mặc định sẵn sàng
+                    if (statusButton && statusText) {
+                         statusButton.textContent = 'Đặt Sang "Bận/Nghỉ"';
+                         statusText.textContent = 'Sẵn sàng';
+                         statusText.classList.add('text-success-color'); 
+                        
+                        statusButton.onclick = () => {
+                            isAvailable = !isAvailable;
+                            if (isAvailable) {
+                                statusButton.textContent = 'Đặt Sang "Bận/Nghỉ"';
+                                statusText.textContent = 'Sẵn sàng';
+                                statusText.classList.remove('text-red-500');
+                                statusText.classList.add('text-success-color'); 
+                            } else {
+                                statusButton.textContent = 'Đặt Sang "Sẵn sàng"';
+                                statusText.textContent = 'Bận/Nghỉ';
+                                statusText.classList.remove('text-success-color');
+                                statusText.classList.add('text-red-500');
+                            }
+                        };
+                    }
+                }, 0);
+            }
+
+            content = `
+                ${StyledHeader(
+                    `${greeting} 🚀`, 
+                    'Chia sẻ tri thức, định hướng thế hệ kế tiếp.', 
+                    { start: '#22D3EE', mid: '#3B82F6', end: '#FACC15', subColor: '#10b981' }, 
+                    null, 
+                    '🚀'
+                )}
+                ${MentorNavBar(activeTab)}
+                <div class="p-4 space-y-6 pb-4">
+                    ${tabContent}
+                </div>
+            `;
+        }
+        
+        // 6. Danh sách Mentor (mentor_list)
+        else if (screen === 'mentor_list') {
+            // ... (Giữ nguyên nội dung, CTA trong card là Chat)
+            const mentorListHtml = MENTORS.map(mentor => `
+                <div class="interactive-card bg-white p-4 rounded-2xl shadow-lg flex items-center justify-between border-b-2 ${mentor.verified ? 'border-success-color/50' : 'border-gray-200'} transform hover:scale-[1.01]">
+                    <div onclick="navigate('mentor_detail', {name: '${mentor.name}'})" class="flex items-center space-x-3 cursor-pointer">
+                        <img class="w-14 h-14 rounded-full object-cover p-1 ring-2 ${mentor.verified ? 'ring-success-color animate-glowing-node' : 'ring-gray-300'}" src="https://placehold.co/150x150/${mentor.color.substring(1)}/ffffff?text=${mentor.avatar}" alt="Avatar">
+                        <div>
+                            <p class="font-bold text-lg text-gray-900">${mentor.name} ${mentor.verified ? `<span class="text-xs font-semibold text-success-color bg-green-100 px-2 py-0.5 rounded-full">Đã xác thực</span>` : ''}</p>
+                            <p class="text-sm text-gray-600">${mentor.role}</p>
+                            <p class="text-xs text-upskill-accent font-medium">Điểm chất lượng: ${mentor.quality}/100</p>
+                        </div>
+                    </div>
+                    <button onclick="navigate('chat', {mode: 'mentor', mentor: '${mentor.name}', back: 'mentor_list'})" class="interactive-card bg-upskill-primary text-white p-2 rounded-full shadow-md hover:bg-upskill-secondary transition duration-150">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"></path></svg>
+                    </button>
+                </div>
+            `).join('');
+
+             content = `
+                 ${StyledHeader(
+                    'Danh sách Chuyên gia', 
+                    'Kết nối với mentor uy tín, hồ sơ được xác thực Blockchain.', 
+                    { start: '#2F5DDE', mid: '#6366f1', end: '#10b981', subColor: '#2F5DDE' }, 
+                    null, 
+                    '💬'
+                )}
+                 <div class="p-4 space-y-6 pb-20">
+                    <input type="text" placeholder="Tìm kiếm theo chuyên môn (Blockchain, AI, Marketing...)" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-upskill-primary transition shadow-sm animate-slide-up" style="animation-delay: 0.1s">
+                    
+                    <div class="interactive-card bg-gradient-to-r from-upskill-secondary/10 to-upskill-primary/10 p-4 rounded-xl shadow-md border-l-4 border-upskill-primary/80 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.15s">
+                        <p class="text-sm font-semibold text-upskill-primary mb-1">AI Matchmaking</p>
+                        <h3 class="font-bold text-gray-900">Tìm Mentor lý tưởng chỉ trong 30 giây?</h3>
+                        <p class="text-xs text-gray-600 mt-1">AI sẽ phân tích nhu cầu của bạn để gợi ý Mentor có tỷ lệ thành công cao nhất.</p>
+                        <button onclick="navigate('ai_quiz', {isMatchQuiz: true})" class="mt-3 text-xs font-bold text-white bg-upskill-accent px-3 py-1.5 rounded-full shadow-md hover:bg-warning-color transition">
+                            Bắt đầu Quiz AI
+                        </button>
+                    </div>
+
+                    <div class="space-y-4">
+                        ${mentorListHtml}
+                    </div>
+                 </div>
+             `;
+        } 
+        
+        // 6b. Danh sách Mentor cho Booking (booking_mentor_list) - Tương tự mentor_list nhưng CTA là Đặt lịch
+        else if (screen === 'booking_mentor_list') {
+            const mentorListHtml = MENTORS.filter(m => m.isAvailable).map(mentor => `
+                <div class="interactive-card bg-white p-4 rounded-2xl shadow-lg flex items-center justify-between border-b-2 ${mentor.verified ? 'border-upskill-secondary/50' : 'border-gray-200'} transform hover:scale-[1.01]">
+                    <div onclick="navigate('mentor_detail', {name: '${mentor.name}'})" class="flex items-center space-x-3 cursor-pointer">
+                        <img class="w-14 h-14 rounded-full object-cover p-1 ring-2 ${mentor.verified ? 'ring-upskill-secondary animate-glowing-node' : 'ring-gray-300'}" src="https://placehold.co/150x150/${mentor.color.substring(1)}/ffffff?text=${mentor.avatar}" alt="Avatar">
+                        <div>
+                            <p class="font-bold text-lg text-gray-900">${mentor.name} (${formatVND(mentor.price)}/giờ)</p>
+                            <p class="text-sm text-gray-600">${mentor.role}</p>
+                            <p class="text-xs text-success-color font-medium">${mentor.isAvailable ? 'Sẵn sàng đặt lịch' : 'Hiện đang bận'}</p>
+                        </div>
+                    </div>
+                    <button onclick="navigate('booking_mentee', {name: '${mentor.name}'})" class="interactive-card bg-upskill-secondary text-white p-2 px-3 text-sm rounded-full shadow-md hover:bg-upskill-primary transition duration-150">
+                        Chọn slot 📅
+                    </button>
+                </div>
+            `).join('');
+
+             content = `
+                 ${StyledHeader(
+                    '📅 Đặt lịch Cố vấn', 
+                    'Chọn chuyên gia có khung giờ phù hợp với bạn.', 
+                    { start: '#A855F7', mid: '#2F5DDE', end: '#5BA8FF', subColor: '#A855F7' }, 
+                    null, 
+                    '📅'
+                )}
+                 <div class="p-4 space-y-6 pb-20">
+                    <h2 class="text-xl font-bold text-gray-900 animate-slide-up" style="animation-delay: 0.1s">Mentor có lịch trống</h2>
+                    <div class="space-y-4">
+                        ${mentorListHtml}
+                    </div>
+                 </div>
+             `;
+        } 
+        
+        // 6c. Đặt lịch Mentor (booking_mentee_calendar) - Giao diện Calendar (P.2)
+        else if (screen === 'booking_mentee_calendar') {
+            const mentorName = data.name || currentMentorBooking;
+            const mentor = MENTORS.find(m => m.name === mentorName);
+            const mentorId = mentor.name;
+            const currentMentorPrice = mentor ? mentor.price : 0;
+            
+            const currentWeekDays = getCurrentWeekDays(currentWeekStart);
+
+            // Lấy các mốc thời gian 30 phút từ 8:00 đến 21:00
+            const timeSlots = [];
+            for (let h = 8; h <= 20; h++) {
+                for (let m of [0, 30]) {
+                    if (h === 20 && m === 30) break; 
+                    const startMin = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+                    const endH = (h + (m === 30 ? 1 : 0)).toString().padStart(2, '0');
+                    const endM = (m === 0 ? 30 : 0).toString().padStart(2, '0');
+                    const endMin = `${endH}:${endM}`;
+                    timeSlots.push(`${startMin} - ${endMin}`);
+                }
+            }
+
+            const getSlot = (isoDate, timeSlot) => {
+                 // SỬ DỤNG menteeSlotsMock
+                 const daySlots = menteeSlotsMock[isoDate];
+                 return daySlots ? daySlots.find(s => s.time === timeSlot) : null;
+            };
+
+            const getSlotClass = (slot) => {
+                if (!slot) return 'slot-empty';
+                if (slot.status === 'available') {
+                    // Check if the slot is selected
+                    const isSelected = selectedSlots.some(s => s.date === getFormattedDate(slot.date).full && s.time === slot.time);
+                    return isSelected ? 'slot-selected' : 'slot-available';
+                }
+                if (slot.status === 'pending') return 'slot-pending';
+                if (slot.status === 'booked') return 'slot-confirmed';
+                if (slot.status === 'busy') return 'slot-occupied';
+                return 'slot-empty';
+            };
+
+            const renderSlotContent = (day, timeSlot) => {
+                const slot = getSlot(day.iso, timeSlot);
+                const status = slot ? slot.status : 'empty';
+                const timeOnly = timeSlot.split(' - ')[0]; // Lấy giờ bắt đầu (HH:MM)
+
+                let content = '';
+                let ariaLabel = `${day.full} ${timeSlot}, Trạng thái: `;
+
+                if (status === 'available') {
+                    ariaLabel += 'Còn trống';
+                    const isSelected = selectedSlots.some(s => s.date === day.full && s.time === timeSlot);
+                    const selectedClass = isSelected ? 'slot-selected' : 'slot-available';
+                    
+                    content = `
+                        <button onclick="toggleSlotSelection('${day.full}', '${timeSlot}', ${currentMentorPrice}, '${mentorName}')" 
+                                class="slot-button ${selectedClass}"
+                                aria-label="${ariaLabel}"
+                                style="font-weight: 600;">
+                            <span>${timeOnly}</span>
+                            <span class="text-current">${isSelected ? '✓' : '▢'}</span>
+                        </button>
+                    `;
+                } else if (status === 'pending') {
+                    ariaLabel += 'Chờ xác nhận';
+                    content = `<span class="text-xs font-bold text-calendar-pending-text flex items-center justify-center h-full">⏳ Chờ duyệt</span>`;
+                } else if (status === 'booked') {
+                    ariaLabel += 'Đã đặt';
+                    content = `<span class="text-xs font-bold text-calendar-booked-text flex items-center justify-center h-full">🔒 Đã đặt</span>`;
+                } else if (status === 'busy') {
+                    ariaLabel += 'Bận';
+                    content = `<span class="text-xs font-bold text-calendar-busy-text flex items-center justify-center h-full">Bận</span>`;
+                }
+                
+                return content;
+            };
+
+
+            const calendarHtml = `
+                <div class="p-4 space-y-4 bg-white/95 rounded-xl shadow-2xl border border-gray-100">
+                     <div class="flex justify-between items-center text-sm font-semibold sticky top-0 bg-white z-30 py-2 border-b border-gray-200">
+                         <!-- Navigation buttons (Sử dụng Date object để thay đổi tuần) -->
+                         <button onclick="changeWeek(-7, '${mentorName}')" class="text-gray-500 hover:text-upskill-primary p-2 rounded-full transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                         <h3 class="text-base font-bold text-gray-900">
+                            ${currentWeekDays[0].date.substring(0, 5)} - ${currentWeekDays[6].date.substring(0, 5)}
+                         </h3>
+                         <button onclick="changeWeek(7, '${mentorName}')" class="text-gray-500 hover:text-upskill-primary p-2 rounded-full transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                     </div>
+                     
+                    <!-- Legend -->
+                    <div class="flex flex-wrap gap-2 text-xs font-semibold p-3 bg-gray-50 rounded-lg">
+                        <span class="flex items-center text-calendar-available-text"><span class="w-3 h-3 rounded-full bg-calendar-available-bg border border-calendar-available-border mr-1"></span> Trống</span>
+                        <span class="flex items-center text-calendar-selected-text"><span class="w-3 h-3 rounded-full bg-calendar-selected-bg border border-calendar-selected-border mr-1"></span> Đã chọn</span>
+                        <span class="flex items-center text-calendar-pending-text"><span class="w-3 h-3 rounded-full bg-calendar-pending-bg border border-calendar-pending-border mr-1"></span> Chờ duyệt</span>
+                        <span class="flex items-center text-calendar-booked-text"><span class="w-3 h-3 rounded-full bg-calendar-booked-bg border border-calendar-booked-border mr-1"></span> Đã đặt</span>
+                        <span class="flex items-center text-calendar-busy-text"><span class="w-3 h-3 rounded-full bg-calendar-busy-bg border border-calendar-busy-border mr-1"></span> Bận</span>
+                    </div>
+                     
+                    <!-- Calendar Action/Info -->
+                    <div class="bg-upskill-primary/10 p-3 rounded-xl text-center text-sm font-bold text-upskill-primary">
+                        Đang chọn: ${selectedSlots.length} slot (${selectedSlots.length * 30} phút)
+                    </div>
+
+                    <!-- CALENDAR GRID -->
+                    <div class="overflow-x-auto hide-scrollbar">
+                        <div class="calendar-grid min-w-[650px]">
+                             <!-- Header Row -->
+                            <div class="calendar-header bg-calendar-bg-dark text-white border-none sticky left-0 z-20">Giờ</div>
+                            ${currentWeekDays.map(day => 
+                                // 1) Sửa lỗi "Thứ 13/14/15..." -> T2 13/01, T3 14/01...
+                                `<div class="calendar-header border-none ${day.isToday ? 'bg-upskill-secondary/90 text-upskill-accent border-b-2 border-upskill-accent' : 'bg-calendar-bg-dark text-white'}">${day.short}<br><span class="font-normal text-[0.6rem]">${day.date}</span></div>`
+                            ).join('')}
+
+                            <!-- Time Slot Rows -->
+                            ${timeSlots.map(timeSlot => {
+                                const timeLabel = timeSlot.split(' - ')[0]; // Lấy giờ bắt đầu HH:MM
+                                
+                                return `
+                                    <div class="time-label bg-calendar-bg-dark text-gray-400 border-none sticky left-0 z-20" style="background-color: #243B64;">
+                                        ${timeLabel}
+                                    </div>
+                                    ${currentWeekDays.map(day => {
+                                        const slot = getSlot(day.iso, timeSlot);
+                                        const slotClass = getSlotClass(slot);
+                                        const isTodayClass = day.isToday ? 'bg-upskill-primary/5' : 'bg-white';
+                                        
+                                        return `
+                                            <div class="calendar-slot ${slotClass} ${isTodayClass}"
+                                                style="--calendar-available-bg: #DCE7FF; --calendar-available-border: #BFD0FF; --calendar-available-text: #1E2A50; 
+                                                       --calendar-pending-bg: #FEF3C7; --calendar-pending-border: #F59E0B; --calendar-pending-text: #92400E;
+                                                       --calendar-booked-bg: #DBEAFE; --calendar-booked-border: #3B82F6; --calendar-booked-text: #1E3A8A;
+                                                       --calendar-busy-bg: #F3F4F6; --calendar-busy-border: #9CA3AF; --calendar-busy-text: #4B5563;"
+                                                       >
+                                                ${renderSlotContent(day, timeSlot)}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    
+                    <button onclick="openBookingModal('${mentorName}')" class="shine-button w-full py-3 mt-4 text-white font-bold text-lg rounded-xl shadow-lg transition duration-300 hover:opacity-90 ${selectedSlots.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}" ${selectedSlots.length === 0 ? 'disabled' : ''}>
+                        XÁC NHẬN ĐẶT LỊCH (${selectedSlots.length} SLOT)
+                    </button>
+                </div>
+            `;
+
+
+            content = `
+                 ${StyledHeader(
+                    `Đặt lịch với ${mentorName}`, 
+                    `Phí cố vấn: ${formatVND(mentor.price)}/giờ. Chọn tối đa ${MAX_SELECT} slot.`, 
+                    { start: '#5BA8FF', mid: '#A855F7', end: '#2F5DDE', subColor: '#2F5DDE' }, 
+                    'booking_list', 
+                    '🗓️'
+                )}
+                 <div class="p-4 space-y-6 pb-20">
+                    ${calendarHtml}
+                 </div>
+             `;
+        }
+        
+        // 7. Chi tiết Mentor (mentor_detail)
+        else if (screen === 'mentor_detail') {
+            // ... (Giữ nguyên nội dung)
+             const mentor = MENTORS.find(m => m.name === data.name) || { name: 'Mentor X', color: 'bg-gray-500', verified: false, role: 'Đang cập nhật', quality: 'N/A', price: 0 };
+            const mentorName = mentor.name;
+
+            // SỬA LỖI: Thay Maps(...) bằng navigate(...)
+            const chatButtonAction = `navigate('chat', {mode: 'mentor', mentor: '${mentorName}', back: 'mentor_list'})`;
+
+            const mentorDetailContent = `
+                ${StyledHeader(
+                    mentorName, 
+                    'Hồ sơ đã được xác thực uy tín Blockchain.', 
+                    { start: '#6366f1', mid: '#a855f7', end: '#22D3EE', subColor: '#a855f7' }, 
+                    'mentor_list', 
+                    mentor.verified ? '✅' : '⏳'
+                )}
+                <div class="p-6 space-y-6 pb-20 bg-transparent">
+                    <div class="glass-card p-6 text-center transform hover:scale-[1.01] relative animate-slide-up" style="animation-delay: 0.1s">
+                        ${mentor.verified ? `<div class="absolute inset-0 rounded-3xl ring-4 ring-success-color/50 animate-glowing-node pointer-events-none"></div>` : ''}
+                        <img class="w-24 h-24 rounded-full object-cover mx-auto p-1 mb-3 ring-4 ${mentor.verified ? 'ring-success-color avatar-glow' : 'ring-gray-300'}" src="https://placehold.co/200x200/4F46E5/ffffff?text=${mentor.avatar}" alt="Avatar">
+                        <h2 class="text-3xl font-extrabold text-gray-900">${mentorName}</h2>
+                        <p class="text-lg text-upskill-primary font-semibold mt-1">${mentor.role} (${mentor.quality}/100)</p>
+                        
+                        <div class="inline-flex items-center ${mentor.verified ? 'bg-green-100 text-success-color' : 'bg-yellow-100 text-warning-color'} font-bold px-4 py-2 mt-4 rounded-full shadow-md">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8.59l-9 9z"/></svg>
+                            Hồ sơ ${mentor.verified ? 'Đã Xác thực (Blockchain)' : 'Đang chờ Xác thực'}
+                        </div>
+
+                        <div class="mt-6 text-left space-y-4 p-4 bg-gray-100 rounded-xl shadow-inner animate-slide-up" style="animation-delay: 0.2s">
+                            <h3 class="text-xl font-bold text-gray-900 border-b pb-2 border-gray-300">Kinh nghiệm & Kỹ năng</h3>
+                            <p class="text-gray-700 flex items-center">
+                                <span class="text-xl mr-2 text-upskill-primary">🏢</span>
+                                <strong>Công ty:</strong> TechCorp, Senior Engineer</p>
+                            <p class="text-gray-700 flex items-center">
+                                <span class="text-xl mr-2 text-upskill-accent">💰</span>
+                                <strong>Phí Cố vấn:</strong> ${formatVND(mentor.price)} / giờ
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="bg-gray-300 text-sm font-medium px-3 py-1 rounded-full text-gray-800">ReactJS</span>
+                                <span class="bg-upskill-primary/30 text-sm font-medium px-3 py-1 rounded-full text-upskill-primary font-bold">Solidity</span>
+                                <span class="bg-gray-300 text-sm font-medium px-3 py-1 rounded-full text-gray-800">Cloud Computing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between space-x-4 pt-4 animate-slide-up" style="animation-delay: 0.3s">
+                        <button onclick="${chatButtonAction}" class="interactive-card flex-1 py-3 bg-upskill-primary text-white font-bold rounded-xl shadow-xl transition duration-300 hover:bg-upskill-secondary">
+                            CHAT VỚI MENTOR
+                        </button>
+                        <button onclick="navigate('booking_mentee', {name: '${mentorName}'})" class="interactive-card flex-1 py-3 bg-upskill-accent text-white font-bold rounded-xl shadow-xl transition duration-300 hover:bg-warning-color">
+                            ĐẶT LỊCH CỐ VẤN
+                        </button>
+                    </div>
+                </div>
+            `;
+            content = mentorDetailContent;
+        }
+
+        // 8. Đăng ký Mentor (mentor_onboarding)
+        else if (screen === 'mentor_onboarding') {
+            // Re-apply white background
+            if (screenContentEl) screenContentEl.style.background = 'white';
+
+            content = `
+                <!-- 2) Căn giữa tuyệt đối cho Onboarding -->
+                <div class="flex flex-col items-center justify-center h-full w-full p-6 overflow-y-auto hide-scrollbar">
+                    <div class="w-full max-w-sm text-center">
+                        <div class="relative w-20 h-20 mx-auto mb-4 animate-slide-up" style="animation-delay: 0.1s">
+                            <svg class="w-full h-full text-upskill-primary animate-glowing-node" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 13.5l-5-2.5v-3l5-2.5 5 2.5v3l-5 2.5z"/>
+                            </svg>
+                        </div>
+
+                        <!-- 2) Thêm tên app và căn giữa -->
+                        <h1 class="text-4xl font-extrabold text-upskill-primary mb-2 animate-slide-up" style="animation-delay: 0.2s; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            UPSKILL 🚀
+                        </h1>
+                        <p class="text-xl font-bold text-gray-900 text-center animate-slide-up" style="animation-delay: 0.3s">
+                            Đăng ký Mentor
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2 mb-6 animate-slide-up" style="animation-delay: 0.4s">
+                            Để duy trì chất lượng, vui lòng cung cấp thông tin chuyên môn của bạn.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-4 w-full max-w-sm">
+                        <input type="text" placeholder="Lĩnh vực chuyên môn chính (vd: Blockchain, Data Science)" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-upskill-primary transition" required>
+                        <input type="text" placeholder="Số năm kinh nghiệm làm việc" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-upskill-primary transition" required>
+                        <input type="number" placeholder="Mức phí cố vấn đề xuất (VND/giờ, vd: 250000)" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-upskill-primary transition" required>
+                        <textarea placeholder="Tóm tắt kinh nghiệm và giá trị bạn mang lại" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-upskill-primary transition" rows="3" required></textarea>
+                        
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl shadow-sm animate-slide-up" style="animation-delay: 0.5s">
+                            <p class="text-sm font-bold text-blue-700 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                Xác thực & Cam kết (Blockchain)
+                            </p>
+                            <div class="mt-3 flex items-start space-x-2">
+                                <input type="checkbox" id="commitment-check" class="mt-1 form-checkbox h-4 w-4 text-upskill-primary rounded border-gray-300 focus:ring-upskill-primary" required>
+                                <label for="commitment-check" class="text-xs text-gray-700 font-medium">Tôi đồng ý và chịu trách nhiệm hoàn toàn về thông tin, chuyên môn và đạo đức cố vấn của mình.</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="isMentorVerified=false; navigate('mentor_verifying')" class="shine-button w-full max-w-md py-6 px-6 text-white font-bold text-xl rounded-2xl shadow-lg transition duration-300 transform hover:scale-[1.01] mt-8 animate-slide-up flex items-center justify-center" style="animation-delay: 0.6s; position: relative;">
+                        <span style="position: relative; z-index: 10;">Gửi hồ sơ & Bắt đầu</span>
+                    </button>
+
+                    <div class="text-center pt-4 pb-8 animate-slide-up" style="animation-delay: 0.7s">
+                         <button onclick="logout()" class="text-gray-500 font-medium hover:text-gray-700">Đăng xuất và quay lại sau</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 9. Đang Xác thực (mentor_verifying)
+        else if (screen === 'mentor_verifying') {
+            // Re-apply white background
+            if (screenContentEl) screenContentEl.style.background = 'white';
+
+            const mockHash = '0x2a9e34b12f7c00e6f3d1b9a2c8e5d47a0';
+            let isVerified = false;
+
+            // Simple state function to toggle between verifying and verified view
+            const renderVerifyingScreen = (isVerified) => {
+                const titleText = isVerified ? 'Hồ sơ Mentor đã Xác thực ✅' : 'Hồ sơ Mentor đang Xác thực...';
+                const subtitleText = isVerified ? 'Bạn đã chính thức gia nhập mạng lưới Mentor uy tín của UPSKILL!' : 'Quá trình xác thực trên Blockchain đang được thực hiện.';
+                const subtitleColor = isVerified ? 'text-success-color animate-neon-glow' : 'text-gray-600';
+                const buttonText = isVerified ? 'Đến Dashboard' : 'Đang xử lý...';
+                const buttonAction = isVerified ? `isMentorVerified = true; navigate('mentor_dashboard')` : `console.log('Verifying...')`;
+                const buttonClass = isVerified ? 'shine-button bg-success-color' : 'bg-gray-400 cursor-not-allowed';
+
+                return `
+                    <div class="h-full w-full flex flex-col items-center justify-center p-8 text-center bg-white overflow-y-auto hide-scrollbar">
+                        <div class="w-24 h-24 mb-6 relative animate-slide-up" style="animation-delay: 0.1s">
+                            <svg class="w-full h-full text-upskill-primary ${isVerified ? 'animate-none' : 'animate-glowing-node'}" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 13.5l-5-2.5v-3l5-2.5 5 2.5v3l-5 2.5zm-5.5-5.5L12 8l5.5 2.75-5.5 2.75-5.5-2.75z"/>
+                            </svg>
+                            <svg class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white ${isVerified ? 'text-success-color animate-checkmark-burst' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v-4a2 2 0 012-2h12a2 2 0 012 2v4m-6-4h-4"/></svg>
+                        </div>
+
+                        <h1 id="verify-title" class="text-3xl font-bold text-gray-900 mb-2 animate-slide-up" style="animation-delay: 0.2s">${titleText}</h1>
+                        <p id="verify-subtitle" class="text-lg font-semibold mb-6 animate-slide-up ${subtitleColor}" style="animation-delay: 0.25s">${subtitleText}</p>
+                        
+                        ${isVerified ? `
+                            <div class="p-4 bg-green-50 rounded-xl shadow-inner mb-8 animate-slide-up" style="animation-delay: 0.3s">
+                                <p class="text-sm font-bold text-success-color flex items-center justify-center">
+                                    Mã Xác thực (Hash) trên Blockchain: 
+                                </p>
+                                <p class="font-mono text-sm text-gray-700 bg-gray-200 px-2 py-1 mt-2 rounded-full truncate hover:text-clip hover:overflow-visible transition duration-300">${mockHash}</p>
+                                <span class="text-xs text-blue-500 mt-2 cursor-pointer hover:underline" onclick="document.execCommand('copy', false, '${mockHash}')">
+                                    [Click để Copy Hash]
+                                </span>
+                            </div>
+                        ` : `
+                            <div class="p-4 bg-blue-50 rounded-xl shadow-inner mb-8 animate-slide-up w-full max-w-xs" style="animation-delay: 0.3s">
+                                <p class="text-sm font-bold text-upskill-primary flex items-center justify-center">
+                                    Tiến trình ghi nhận dữ liệu
+                                </p>
+                                <div class="data-beam-container w-full mt-3 h-2 rounded-full bg-gray-300">
+                                    <div class="data-beam bg-upskill-blue-light h-2 rounded-full" style="animation-duration: 4s;"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">Thời gian chờ dự kiến: 10 giây</p>
+                            </div>
+                        `}
+
+                        <button id="verify-button" onclick="${buttonAction}" class="${buttonClass} w-full py-4 text-white font-bold text-lg rounded-2xl shadow-lg transition duration-300 transform hover:scale-[1.01] mt-8 max-w-xs animate-slide-up" style="animation-delay: 0.35s">
+                            ${buttonText}
+                        </button>
+                        
+                        <button onclick="logout()" class="mt-6 text-gray-500 font-medium hover:text-gray-700 animate-slide-up" style="animation-delay: 0.4s">Đăng xuất</button>
+                    </div>
+                `;
+            };
+
+            content = renderVerifyingScreen(false); // Start with verifying state
+
+            // Simulate the verification process
+            setTimeout(() => {
+                isVerified = true;
+                if (currentScreen === 'mentor_verifying') {
+                    appContainer.innerHTML = renderVerifyingScreen(true);
+                }
+            }, 5000); // 5 seconds verification simulation
+        }
+
+        // 10. Chat 
+        else if (screen === 'chat') {
+            // ... (Giữ nguyên nội dung)
+            const mode = data.mode || 'mentor';
+            const mentorName = data.mentor || 'AI Trợ lý';
+            const title = mode === 'mentor' ? `${mentorName}` : 'AI Trợ lý';
+            const subtitle = mode === 'mentor' ? `Đang trực tuyến. Bắt đầu phiên cố vấn.` : 'Hỗ trợ 24/7. Hỏi tôi bất cứ điều gì!';
+            
+            const backScreenTarget = data.back || 'dashboard'; 
+
+            content = `
+                ${StyledHeader(
+                    title, 
+                    subtitle, 
+                    { start: '#a855f7', mid: '#ff6f61', end: '#3B82F6', subColor: '#a855f7' }, 
+                    backScreenTarget, 
+                    mode === 'mentor' ? '👨‍💼' : '🤖'
+                )}
+                <div class="flex flex-col h-full bg-gray-100">
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4 pb-4">
+                        <div class="flex justify-start animate-slide-up" style="animation-delay: 0.1s"><div class="chat-bubble-mentor max-w-[80%] p-3 shadow-md">${mode === 'mentor' ? `Chào bạn! Tôi là ${mentorName}. Tôi rất vui khi được kết nối.` : `Xin chào, tôi là AI của UPSKILL. Bạn có thể hỏi tôi bất cứ điều gì.`}</div></div>
+                        <div class="flex justify-end animate-slide-up" style="animation-delay: 0.15s"><div class="chat-bubble-user max-w-[80%] p-3 shadow-md">Tôi cần lộ trình học tập về Python.</div></div>
+                        <div class="flex justify-start animate-slide-up" style="animation-delay: 0.2s"><div class="chat-bubble-mentor max-w-[80%] p-3 shadow-md">Tuyệt vời! Để bắt đầu với Python, bạn nên tập trung vào 3 module chính: Cơ bản, Data Structures và Thư viện ứng dụng (ví dụ: Pandas).</div></div>
+                    </div>
+                    
+                    <div class="p-4 bg-white border-t border-gray-200">
+                        <div class="flex space-x-3">
+                            <input type="text" placeholder="Nhập tin nhắn..." class="flex-1 p-3 border border-gray-300 rounded-full focus:ring-upskill-primary focus:border-upskill-primary transition">
+                            <button class="interactive-card bg-upskill-primary text-white p-3 rounded-full shadow-lg hover:bg-upskill-secondary transition duration-150 transform hover:scale-105">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 11. Ranking (ranking)
+        else if (screen === 'ranking') {
+            // ... (Giữ nguyên nội dung)
+            activeRankingTab = data.tab || 'nhiem_vu';
+
+            let rankingContent = '';
+
+            // --- Nội dung tab Nhiệm vụ ---
+            if (activeRankingTab === 'nhiem_vu') {
+                rankingContent = `
+                    ${Object.keys(MISSION_GROUPS).map((groupName, groupIndex) => `
+                        <div class="interactive-card p-5 bg-white rounded-2xl shadow-xl border border-upskill-accent/20 mb-6 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.1 + groupIndex * 0.15}s">
+                            <h2 class="text-xl font-bold text-gray-900 mb-3 border-b pb-2">${groupName}</h2>
+                            <ul class="space-y-3">
+                                ${MISSION_GROUPS[groupName].map(mission => `
+                                    <li class="flex items-center justify-between p-3 rounded-xl shadow-sm border-l-4 border-${mission.color} ${mission.status === 'Đã xong' ? 'bg-green-50' : 'bg-gray-50'} transform hover:scale-[1.01]">
+                                        <div>
+                                            <p class="font-bold text-gray-800">${mission.title}</p>
+                                            <p class="text-xs text-gray-500">Thưởng: ${mission.reward}</p>
+                                        </div>
+                                        ${mission.status === 'Đã xong' ? 
+                                            `<span class="text-success-color font-bold text-sm">Đã xong</span>` : 
+                                            `<button class="bg-upskill-primary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md hover:bg-upskill-secondary">Thực hiện</button>`
+                                        }
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                    
+                    <div class="interactive-card p-5 bg-upskill-primary text-white rounded-2xl shadow-xl transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.5}s">
+                        <h2 class="text-lg font-bold mb-1">Điểm thưởng của bạn</h2>
+                        <span class="text-4xl font-extrabold text-upskill-accent">750 ✨</span>
+                        <p class="text-sm mt-2 opacity-90">Sử dụng điểm thưởng để đổi lấy voucher khóa học hoặc ưu tiên chọn Mentor VIP.</p>
+                    </div>
+                `;
+            } 
+            
+            // --- Nội dung tab BXH Học viên ---
+            else if (activeRankingTab === 'bxh_mentee') {
+                // ... (Giữ nguyên nội dung)
+                rankingContent = `
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 animate-slide-up" style="animation-delay: 0.1s">BXH Học viên (Điểm tích lũy)</h2>
+                    <div class="space-y-2">
+                        ${MENTEES.map((mentee, index) => `
+                            <div class="interactive-card flex items-center justify-between p-4 rounded-xl shadow-md transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.15 + index * 0.05}s"
+                                ${mentee.rank === 1 ? 'bg-yellow-50 border-l-4 border-upskill-accent' : 
+                                 mentee.isYou ? 'bg-upskill-primary/10 border-l-4 border-upskill-primary' : 
+                                 'bg-white border border-gray-200'}">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl font-extrabold w-8 text-center ${mentee.rank <= 3 ? 'text-upskill-accent' : 'text-gray-500'}">#${mentee.rank}</span>
+                                    <span class="font-bold text-lg text-gray-900">${mentee.name} ${mentee.isYou ? '<span class="text-xs text-upskill-primary">(Bạn)</span>' : ''}</span>
+                                </div>
+                                <span class="text-xl font-extrabold ${mentee.rank <= 3 ? 'text-upskill-accent' : 'text-upskill-primary'}">${mentee.score} ✨</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } 
+            
+            // --- Nội dung tab BXH Mentor ---
+            else if (activeRankingTab === 'bxh_mentor') {
+                // ... (Giữ nguyên nội dung)
+                const mentorRanks = MENTORS.sort((a, b) => b.quality - a.quality).map((m, index) => ({
+                    ...m,
+                    rank: index + 1
+                }));
+                
+                rankingContent = `
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 animate-slide-up" style="animation-delay: 0.1s">BXH Mentor (Điểm Chất lượng)</h2>
+                    <div class="space-y-2">
+                        ${mentorRanks.map((mentor, index) => `
+                            <div class="interactive-card flex items-center justify-between p-4 rounded-xl shadow-md transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.15 + index * 0.05}s"
+                                ${mentor.rank === 1 ? 'bg-green-50 border-l-4 border-success-color' : 'bg-white border border-gray-200'}">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl font-extrabold w-8 text-center ${mentor.rank <= 3 ? 'text-success-color' : 'text-gray-500'}">#${mentor.rank}</span>
+                                    <div>
+                                        <span class="font-bold text-lg text-gray-900">${mentor.name}</span>
+                                        <p class="text-xs text-gray-500">${mentor.role}</p>
+                                    </div>
+                                </div>
+                                <span class="text-xl font-extrabold text-success-color">${mentor.quality} / 100</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-center animate-slide-up" style="animation-delay: 0.5s">Xếp hạng dựa trên phản hồi của Mentee và số giờ cố vấn.</p>
+                `;
+            }
+
+            content = `
+                ${StyledHeader(
+                    'Bảng xếp hạng & Nhiệm vụ', 
+                    'Thách thức bản thân và vươn tới cấp độ mới.', 
+                    { start: '#f97316', mid: '#FFD700', end: '#ff6f61', subColor: '#f97316' }, 
+                    null, 
+                    '🏆'
+                )}
+                ${RankingNavBar(activeRankingTab)}
+                <div class="p-6 space-y-6 pb-20">
+                    ${rankingContent}
+                </div>
+            `;
+        }
+
+        // 12. Marketplace (marketplace)
+        else if (screen === 'marketplace') {
+            // ... (Giữ nguyên nội dung)
+            content = `
+                ${StyledHeader(
+                    'Khám phá Cơ hội Nghề nghiệp', 
+                    'Thực tập, việc làm, workshop được gợi ý theo hồ sơ học tập của bạn.', 
+                    { start: '#10b981', mid: '#FFD700', end: '#f97316', subColor: '#10b981' }, 
+                    null, 
+                    '💼'
+                )}
+                <div class="p-6 space-y-6 pb-20">
+                    <div class="interactive-card bg-gradient-to-r from-success-color to-green-600 p-5 rounded-2xl shadow-xl text-white transform hover:scale-[1.03] animate-slide-up" style="animation-delay: 0.1s">
+                        <h2 class="text-lg font-bold">Cơ hội thực tập được Gợi ý AI</h2>
+                        <p class="text-3xl font-extrabold mt-1">5 Vị trí phù hợp</p>
+                    </div>
+
+                    <h2 class="text-xl font-bold text-gray-900 animate-slide-up" style="animation-delay: 0.2s">Đề xuất Việc làm mới</h2>
+                    <div class="space-y-4">
+                        <div class="interactive-card bg-white p-4 rounded-2xl shadow-lg border-2 border-gray-100 border-l-4 border-success-color/80 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.25s">
+                            <h3 class="font-bold text-lg text-gray-900">Thực tập sinh Lập trình Blockchain</h3>
+                            <p class="text-sm text-upskill-primary font-medium mt-1">Công ty Z (Xác thực Blockchain)</p>
+                            <div class="flex space-x-3 mt-3">
+                                <button class="flex-1 py-2 bg-success-color text-white font-bold rounded-xl text-sm shadow-md hover:bg-green-600">Ứng tuyển</button>
+                            </div>
+                        </div>
+                        <div class="interactive-card bg-white p-4 rounded-2xl shadow-lg border-2 border-gray-100 border-l-4 border-upskill-primary/80 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.3s">
+                            <h3 class="font-bold text-lg text-gray-900">Thực tập sinh UX/UI Design</h3>
+                            <p class="text-sm text-upskill-primary font-medium mt-1">Công ty B (Xác thực đối tác)</p>
+                            <div class="flex space-x-3 mt-3">
+                                <button class="flex-1 py-2 bg-upskill-primary text-white font-bold rounded-xl text-sm shadow-md hover:bg-upskill-secondary">Xem chi tiết</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 13. Profile (profile) - Bộ điều hướng Hồ sơ
+        else if (screen === 'profile') {
+            // Logic này chỉ điều hướng. Nội dung thực sự nằm ở mentee_profile hoặc mentor_dashboard:ho_so
+            if (userRole === 'mentor') {
+                navigate('mentor_dashboard', {tab: 'ho_so'});
+            } else {
+                navigate('mentee_profile');
+            }
+            return;
+        }
+
+        // 13b. Hồ sơ Mentee (mentee_profile) (5)
+        else if (screen === 'mentee_profile') {
+            const profileTitle = 'Hồ sơ cá nhân';
+            const profileAvatar = 'Mentee';
+            const mentee = MENTEES.find(m => m.isYou) || MENTEES[0];
+            
+            content = `
+                ${StyledHeader(
+                    profileTitle, 
+                    'Theo dõi thành tích, mục tiêu và hành trình phát triển.', 
+                    { start: '#0B1E3C', mid: '#3B82F6', end: '#FFD700', subColor: '#0B1E3C' }, 
+                    data.back, 
+                    '🌟'
+                )}
+                <div class="p-6 space-y-4 pb-20">
+                    <div class="glass-card p-6 text-center transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.1s">
+                        <img class="w-24 h-24 rounded-full object-cover mx-auto p-1 mb-3 ring-4 ring-upskill-secondary avatar-glow" src="https://placehold.co/200x200/4F46E5/ffffff?text=${profileAvatar}" alt="Avatar">
+                        <h2 class="text-3xl font-extrabold text-gray-900">${mentee.name}</h2>
+                        <p class="text-lg text-gray-500 font-semibold mt-1">ID: ${mentee.id}ABC12345</p>
+                         
+                         <!-- Badge Trạng thái: Đang học: % tiến độ -->
+                        <div class="inline-flex items-center bg-upskill-primary/10 text-upskill-primary font-bold px-4 py-2 mt-4 rounded-full shadow-md text-sm">
+                            <span class="mr-1">📚</span> Đang học: <span class="font-extrabold ml-1">${mentee.progress}% Tiến độ</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-lg font-bold text-gray-900 mt-6 mb-3 animate-slide-up" style="animation-delay: 0.2s">Thành tích & Gamification</h3>
+                    <div class="glass-card flex justify-around p-4 shadow-inner transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.25s">
+                        <div class="text-center"><span class="text-3xl font-extrabold text-upskill-accent" style="text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);">${mentee.score}</span><p class="text-xs text-gray-600 flex items-center">✨ Điểm Thưởng</p></div>
+                        <div class="text-center"><span class="text-3xl font-extrabold text-upskill-primary">Lv 4</span><p class="text-xs text-gray-600 flex items-center">📈 Cấp độ</p></div>
+                        <div class="text-center"><span class="text-3xl font-extrabold text-success-color">5</span><p class="text-xs text-gray-600 flex items-center">🏆 Huy hiệu</p></div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-gray-900 mt-6 mb-3 animate-slide-up" style="animation-delay: 0.3s">Lộ trình học & Mentor</h3>
+                    <div class="space-y-3">
+                        <!-- Lộ trình học -->
+                        <div class="glass-card p-4 rounded-xl shadow-sm border-l-4 border-upskill-primary transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.35s">
+                            <p class="font-semibold text-upskill-primary flex items-center space-x-2">
+                                <span class="text-xl">🎯</span>
+                                <span>Mục tiêu chính: ${mentee.skill}</span>
+                            </p>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                <div class="bg-upskill-primary h-2 rounded-full" style="width: ${mentee.progress}%"></div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1">Tiến độ: ${mentee.progress}%</p>
+                            <button class="mt-3 text-sm font-bold text-upskill-primary hover:underline">
+                                Tiếp tục Lộ trình
+                            </button>
+                        </div>
+
+                        <!-- Số mentor đã kết nối -->
+                        <div class="glass-card p-4 rounded-xl shadow-sm border-l-4 border-upskill-secondary transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.4s">
+                            <p class="font-semibold text-upskill-secondary flex items-center">
+                                <span class="text-xl mr-2">🤝</span>
+                                Đã kết nối với <span class="font-extrabold ml-1">${mentee.mentors}</span> Mentor
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Nút CTA -->
+                    <div class="flex flex-col space-y-3 pt-6">
+                        <button onclick="navigate('booking_list')" class="shine-button w-full py-3 bg-upskill-accent text-white font-bold text-lg rounded-xl shadow-lg transition duration-300 hover:opacity-90 animate-slide-up" style="animation-delay: 0.45s">
+                            ĐẶT LỊCH CỐ VẤN
+                        </button>
+                        <button onclick="navigate('ai_quiz', {isMatchQuiz: true})" class="w-full py-3 bg-upskill-secondary text-white font-bold rounded-xl text-sm shadow-md hover:bg-upskill-primary transition animate-slide-up" style="animation-delay: 0.5s">
+                            GỢI Ý MENTOR PHÙ HỢP (AI)
+                        </button>
+                    </div>
+
+                    <button onclick="logout()" class="interactive-card w-full py-3 mt-8 bg-red-600 text-white font-bold text-lg rounded-2xl shadow-lg transition duration-300 hover:bg-red-700 animate-slide-up" style="animation-delay: 0.6s">
+                        ĐĂNG XUẤT
+                    </button>
+                </div>
+            `;
+        }
+
+
+        // 14. Cổng thanh toán (payment_gateway)
+        else if (screen === 'payment_gateway') {
+            // CẬP NHẬT: Giao diện Thanh toán Mentee (P.3 + Escrow)
+            const { mentorName, date, slot, price } = data;
+            const mentor = MENTORS.find(m => m.name === mentorName);
+            const mentorAvatar = mentor ? mentor.avatar : 'M';
+            const mentorRole = mentor ? mentor.role : 'N/A';
+            
+            content = `
+                ${StyledHeader(
+                    '💰 Cổng Thanh toán', 
+                    `Buổi cố vấn: ${mentorName} - ${date} (${slot})`, 
+                    { start: '#A855F7', mid: '#22D3EE', end: '#f97316', subColor: '#A855F7' }, 
+                    'booking_mentee_calendar', 
+                    '💳'
+                )}
+                <div class="p-6 space-y-6 h-full bg-transparent" style="background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);">
+                    
+                    <!-- Thông tin buổi cố vấn (Card lớn ESCROW) -->
+                    <div class="escrow-card p-5 rounded-2xl shadow-xl transform hover:scale-[1.01] animate-slide-up" style="animation-delay: 0.1s">
+                        <div class="absolute inset-0 z-0">
+                            <!-- Background Network Pattern -->
+                             <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 10 L 90 90 M 90 10 L 10 90" stroke="#FFFFFF" class="escrow-icon-path" stroke-width="0.5"/>
+                                <circle cx="50" cy="50" r="10" fill="#22D3EE" opacity="0.3"/>
+                            </svg>
+                        </div>
+                        <div class="relative z-10 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <p class="text-sm font-semibold text-upskill-accent flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6-4c1.66 0 3 1.34 3 3v1H9V7c0-1.66 1.34-3 3-3zm6 14H6V10h12v8z"/></svg>
+                                    Tài khoản Tạm giữ (Escrow)
+                                </p>
+                                <button onclick="navigate('booking_mentee_calendar', {name: '${mentorName}'})" class="text-xs font-bold text-upskill-accent hover:underline">Xem lịch trống</button>
+                            </div>
+
+                            <div class="flex items-center space-x-3">
+                                <img class="w-12 h-12 rounded-full object-cover p-0.5 ring-2 ring-upskill-accent" src="https://placehold.co/150x150/${mentor.color.substring(1)}/ffffff?text=${mentorAvatar}" alt="Avatar">
+                                <div>
+                                    <p class="text-lg font-extrabold text-white">${mentorName}</p>
+                                    <p class="text-xs opacity-80">${mentorRole}</p>
+                                </div>
+                            </div>
+                            
+                            <p class="text-4xl font-extrabold text-upskill-text-accent mt-3">${formatVND(price)}</p>
+                            
+                            <p class="text-xs font-medium text-gray-300 pt-2">
+                                Khoản thanh toán của bạn sẽ được giữ tạm thời bởi UPSKILL cho đến khi buổi cố vấn hoàn tất.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-900 mt-6 mb-3 animate-slide-up" style="animation-delay: 0.2s">Chọn Phương thức Thanh toán</h3>
+                    
+                    <div id="payment-options" class="space-y-3">
+                        <!-- Option 1: Chuyển khoản -->
+                        <button onclick="selectPayment('bank', event)" class="payment-card-option w-full p-4 text-left rounded-xl shadow-md bg-gray-50 flex items-center space-x-3 animate-slide-up" style="animation-delay: 0.25s">
+                            <span class="text-xl text-upskill-primary">🏦</span>
+                            <p class="font-semibold text-gray-800">Chuyển khoản Ngân hàng <br><span class="text-xs text-gray-500 font-normal">Thanh toán an toàn, minh bạch</span></p>
+                        </button>
+                        <!-- Option 2: Ví điện tử -->
+                        <button onclick="selectPayment('e-wallet', event)" class="payment-card-option w-full p-4 text-left rounded-xl shadow-md bg-gray-50 flex items-center space-x-3 animate-slide-up" style="animation-delay: 0.3s">
+                            <span class="text-xl text-upskill-secondary">💳</span>
+                            <p class="font-semibold text-gray-800">Ví điện tử (Momo, ZaloPay) <br><span class="text-xs text-gray-500 font-normal">Hiển thị mã QR động</span></p>
+                        </button>
+                        <!-- Option 3: Token -->
+                        <button onclick="selectPayment('token', event)" class="payment-card-option w-full p-4 text-left rounded-xl shadow-md bg-gray-50 flex items-center space-x-3 animate-slide-up" style="animation-delay: 0.35s">
+                            <span class="text-xl text-upskill-accent">🪙</span>
+                            <p class="font-semibold text-gray-800">Thanh toán bằng Token (UPS) <br><span class="text-xs text-upskill-accent font-bold">Giảm 10% phí cố vấn</span></p>
+                        </button>
+                    </div>
+                    
+                    <!-- Cam kết -->
+                    <div class="mt-6 flex items-start space-x-2 animate-slide-up" style="animation-delay: 0.4s">
+                        <input type="checkbox" id="payment-commitment" class="mt-1 form-checkbox h-4 w-4 text-upskill-primary rounded border-gray-300 focus:ring-upskill-primary">
+                        <label for="payment-commitment" class="text-xs text-gray-700 font-medium italic">Tôi xác nhận đồng ý thanh toán và đồng ý với điều khoản dịch vụ Escrow của UPSKILL.</label>
+                    </div>
+
+                    <button id="pay-button" onclick="validateAndPay({mentorName: '${mentorName}', date: '${date}', slot: '${slot}', price: ${price}})" class="shine-button w-full py-4 text-white font-bold text-lg rounded-2xl shadow-xl transition duration-300 transform hover:scale-[1.01] mt-8 opacity-50 cursor-not-allowed" disabled style="background: linear-gradient(90deg, #A855F7, #22D3EE, #F97316); animation-delay: 0.45s;">
+                        XÁC NHẬN THANH TOÁN
+                    </button>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                const payButton = document.getElementById('pay-button');
+                const commitmentCheck = document.getElementById('payment-commitment');
+
+                // Logic kích hoạt nút Pay
+                commitmentCheck.onchange = () => {
+                    if (commitmentCheck.checked) {
+                        payButton.disabled = false;
+                        payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                    } else {
+                        payButton.disabled = true;
+                        payButton.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                };
+
+                // Logic chọn phương thức thanh toán
+                window.selectPayment = (method, event) => {
+                    document.querySelectorAll('.payment-card-option').forEach(btn => {
+                        btn.classList.remove('payment-card-selected');
+                        btn.classList.add('bg-gray-50');
+                    });
+                    event.currentTarget.classList.add('payment-card-selected');
+                    event.currentTarget.classList.remove('bg-gray-50');
+                    
+                    // Kích hoạt nút thanh toán nếu đã chọn cam kết
+                    if (commitmentCheck.checked) {
+                        payButton.disabled = false;
+                        payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+                
+                window.validateAndPay = (data) => {
+                    if (!document.querySelector('.payment-card-selected')) {
+                        const messageEl = document.createElement('div');
+                        messageEl.textContent = "Vui lòng chọn phương thức thanh toán!";
+                        messageEl.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-3 rounded-lg shadow-xl z-50 animate-slide-up';
+                        document.body.appendChild(messageEl);
+                        setTimeout(() => messageEl.remove(), 2000);
+                        return;
+                    }
+                    
+                    if (payButton.disabled) return;
+                    
+                    // Mô phỏng Loading Payment (Xác thực Blockchain)
+                    const loadingMessage = document.createElement('div');
+                    loadingMessage.className = 'fixed inset-0 bg-upskill-navy-dark/90 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white';
+                    loadingMessage.innerHTML = `
+                        <div class="relative w-20 h-20 mb-4">
+                            <svg class="w-full h-full text-upskill-accent animate-spin" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-opacity="0.2"></circle><path d="M12 2a10 10 0 0110 10" stroke-linecap="round"></path></svg>
+                            <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-upskill-accent">🔒</span>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-300">Đang xác thực giao dịch trên Blockchain...</p>
+                        <p class="text-xs text-gray-500 mt-2">Mã giao dịch: 0xA91F3C... đang được ghi nhận</p>
+                        <div class="data-beam-container w-64 mt-4 bg-gray-700 h-2 rounded-full">
+                            <div class="data-beam bg-gradient-to-r from-upskill-accent to-upskill-blue-light h-2 rounded-full" style="animation-duration: 2s;"></div>
+                        </div>
+                    `;
+                    document.body.appendChild(loadingMessage);
+
+                    setTimeout(() => {
+                        loadingMessage.remove();
+                        navigate('payment_success', data);
+                    }, 3500); // Tăng thời gian loading để phù hợp với animation Blockchain
+                }
+            }, 0);
+        }
+
+        // 15. Thanh toán thành công (payment_success)
+        else if (screen === 'payment_success') {
+            // CẬP NHẬT: Màn hình Thanh toán Thành công (P.3 + Hóa đơn Escrow)
+            const { mentorName, date, slot, price } = data;
+            const formattedPrice = formatVND(price);
+            
+            content = `
+                ${StyledHeader(
+                    'Thanh toán Thành công! 🎉', 
+                    'Buổi cố vấn của bạn đã được xác nhận và ghi nhận trên Blockchain.', 
+                    { start: '#10b981', mid: '#FFD700', end: '#2F5DDE', subColor: '#10b981' }, 
+                    'mentee_dashboard', 
+                    '✅'
+                )}
+                <div class="p-6 space-y-6 h-full bg-white">
+                    <div class="w-24 h-24 mx-auto mb-6 relative animate-checkmark-burst" style="animation-delay: 0.1s">
+                        <svg class="w-full h-full text-success-color" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8.59l-9 9z"/></svg>
+                    </div>
+
+                    <p class="text-lg text-gray-600 text-center mb-4 animate-slide-up" style="animation-delay: 0.3s">Hệ thống sẽ giữ khoản thanh toán của bạn và chuyển đến mentor sau khi phiên cố vấn hoàn tất.</p>
+                    
+                    <!-- Hóa đơn Escrow -->
+                    <div class="p-4 bg-gray-100 rounded-xl shadow-inner w-full text-left animate-slide-up" style="animation-delay: 0.4s">
+                        <p class="font-bold text-gray-800 flex justify-between">
+                            Hóa đơn #UP123456 
+                            <span class="text-xs text-upskill-secondary font-extrabold">Đang giữ tạm (Escrow)</span>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">Dịch vụ: <span class="font-semibold">Cố vấn nghề nghiệp Fintech</span></p>
+                        <p class="text-sm text-gray-600 mt-1">Mentor: <span class="font-semibold text-upskill-primary">${mentorName}</span></p>
+                        <p class="text-sm text-gray-600">Thời gian: <span class="font-semibold">${slot} - ${date}</span></p>
+                        <p class="text-lg font-bold text-upskill-accent mt-3">Số tiền: ${formattedPrice}</p>
+                        
+                        <div class="mt-4 flex space-x-3">
+                             <button class="flex-1 text-xs font-bold text-upskill-primary hover:underline" onclick="/* Open PDF logic */">Tải hóa đơn PDF</button>
+                             <button class="flex-1 text-xs font-bold text-upskill-secondary hover:underline" onclick="/* Open Blockchain Explorer */">Xem trên Blockchain</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Nút hành động -->
+                    <button onclick="navigate('mentee_dashboard')" class="shine-button w-full py-4 bg-upskill-primary text-white font-bold text-lg rounded-2xl shadow-lg transition duration-300 transform hover:scale-[1.01] mt-8 max-w-xs animate-slide-up" style="animation-delay: 0.6s">
+                        QUAY LẠI TRANG CHỦ
+                    </button>
+                    
+                    <button onclick="navigate('chat', {mode: 'mentor', mentor: '${mentorName}', back: 'mentee_dashboard'})" class="mt-4 text-upskill-secondary font-medium hover:text-upskill-primary animate-slide-up" style="animation-delay: 0.7s">Bắt đầu Chat với Mentor</button>
+                </div>
+            `;
+        }
+        
+        // 16. Lịch sử thanh toán (Màn hình mới)
+        else if (screen === 'payment_history') {
+             const transactionHistory = [
+                { mentor: 'Trần Tuấn Anh', date: '22/10/2025', time: '14:00', amount: 250000, status: 'Hoàn tất', color: 'success-color', hash: '0x1c2b...' },
+                { mentor: 'Phạm Văn Cường', date: '15/10/2025', time: '17:00', amount: 200000, status: 'Đang giữ tạm', color: 'upskill-secondary', hash: '0x8f7d...' },
+                { mentor: 'Lê Thị Bình', date: '01/10/2025', time: '09:00', amount: 180000, status: 'Hoàn tất', color: 'success-color', hash: '0x3g2h...' },
+                { mentor: 'Nguyễn Thị Dinh', date: '28/09/2025', time: '11:00', amount: 300000, status: 'Khiếu nại', color: 'warning-color', hash: '0x4j6k...' },
+            ];
+
+             const historyList = transactionHistory.map((tx, index) => `
+                <div class="interactive-card bg-white p-4 rounded-xl shadow-md border-l-4 border-${tx.color}/80 transform hover:scale-[1.01] animate-slide-up" style="animation-delay: ${0.1 + index * 0.05}s">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg text-gray-900">${tx.mentor}</p>
+                            <p class="text-xs text-gray-500">${tx.date} - ${tx.time}</p>
+                        </div>
+                        <div class="text-right">
+                             <p class="font-extrabold text-upskill-primary">${formatVND(tx.amount)}</p>
+                             <p class="text-xs font-semibold text-${tx.color}">${tx.status}</p>
+                        </div>
+                    </div>
+                     ${tx.status === 'Khiếu nại' ? `<p class="text-xs text-warning-color mt-2 font-medium">⚠️ Đang chờ xử lý. Liên hệ hỗ trợ.</p>` : ''}
+                </div>
+             `).join('');
+
+             content = `
+                ${StyledHeader(
+                    '🧾 Lịch sử Thanh toán', 
+                    'Theo dõi các giao dịch và trạng thái Escrow của bạn.', 
+                    { start: '#10b981', mid: '#FFD700', end: '#f97316', subColor: '#10b981' }, 
+                    'mentee_dashboard', 
+                    '🧾'
+                )}
+                <div class="p-4 space-y-6 pb-20">
+                    <div class="flex justify-between items-center animate-slide-up" style="animation-delay: 0.1s">
+                        <button class="text-sm font-bold bg-upskill-secondary text-white px-3 py-1.5 rounded-full shadow-md">Tất cả</button>
+                        <button class="text-sm font-medium text-gray-600 hover:bg-gray-100 px-3 py-1.5 rounded-full">Đang giữ tạm</button>
+                        <button class="text-sm font-medium text-gray-600 hover:bg-gray-100 px-3 py-1.5 rounded-full">Hoàn tất</button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        ${historyList}
+                    </div>
+
+                    <div class="interactive-card p-4 bg-yellow-100 border-l-4 border-warning-color rounded-xl shadow-md animate-slide-up" style="animation-delay: 0.5s">
+                        <p class="font-semibold text-gray-800">Cần hỗ trợ?</p>
+                        <p class="text-sm text-gray-600">Nếu có khiếu nại về buổi cố vấn, vui lòng gửi yêu cầu xác minh.</p>
+                        <button class="mt-3 text-sm font-bold text-warning-color hover:text-upskill-primary transition">
+                            Gửi yêu cầu khiếu nại
+                        </button>
+                    </div>
+                </div>
+             `;
+        }
+
+        // Default screen handler
+        else if (screen === 'default') {
+            if (userId) {
+                navigate('dashboard');
+            } else {
+                navigate('welcome');
+            }
+            return;
+        }
+
+        appContainer.innerHTML = content;
+        
+        // Cuộn về đầu màn hình
+        const screenContent = document.getElementById('screen-content');
+        if (screenContent) { screenContent.scrollTop = 0; }
+    } 
+
+    // Hàm thay đổi tuần
+    window.changeWeek = (offsetDays, mentorName) => {
+         const newStart = new Date(currentWeekStart);
+         newStart.setDate(currentWeekStart.getDate() + offsetDays);
+         currentWeekStart = newStart;
+         selectedSlots = []; // Clear selection when changing week
+         navigate('booking_mentee_calendar', { name: mentorName });
+    }
+
+    // Khởi tạo ứng dụng
+    window.onload = () => {
+        userId = null; // Khởi tạo chưa đăng nhập
+        navigate('welcome');
+        
+        if (floatingChatButton) {
+            floatingChatButton.onclick = () => {
+                navigate('chat', { mode: 'ai', back: 'dashboard' }); 
+            };
+        }
+    };
+</script>
+<script>
+const standeeScreens = [
+  { screen: 'welcome' },
+  { screen: 'auth' },
+  { screen: 'mentee_dashboard' },
+  { screen: 'mentor_list' },
+  { screen: 'booking_list' },
+  { screen: 'marketplace' },
+  { screen: 'profile' }
+];
+
+let standeeIndex = 0;
+let standeeTimer = null;
+
+// 🌀 Hiệu ứng fade khi chuyển cảnh
+function fadeTransition(nextScreen) {
+  const container = document.getElementById('app-container');
+  if (!container) return;
+
+  // Làm mờ đi dần
+  container.style.transition = 'opacity 0.8s ease';
+  container.style.opacity = '0';
+
+  // Sau 0.8s thì đổi sang màn hình mới
+  setTimeout(() => {
+    navigate(nextScreen);
+    container.style.opacity = '1';
+  }, 800);
+}
+
+// 🚀 Hàm chạy tự động các cảnh
+function startStandeeAutoPlay() {
+  function showNext() {
+    const s = standeeScreens[standeeIndex];
+    if (s) fadeTransition(s.screen);
+    standeeIndex = (standeeIndex + 1) % standeeScreens.length;
+  }
+
+  // Hiển thị cảnh đầu tiên
+  showNext();
+
+  // Chuyển tiếp mỗi 7 giây
+  standeeTimer = setInterval(showNext, 7000);
+}
+
+// 🧩 Hàm dừng autoplay (nếu muốn test thủ công)
+function stopStandeeAutoPlay() {
+  if (standeeTimer) clearInterval(standeeTimer);
+}
+
+// Bắt đầu tự động khi trang tải xong
+window.addEventListener('load', startStandeeAutoPlay);
+</script>
+</body>
+</html>
